@@ -364,21 +364,21 @@ public class Gui extends JFrame {
 		try {
 			BufferedWriter output = new BufferedWriter(new FileWriter(settingsFile));
 			try {
-				output.write("copperCheck: " + copperCheck.isSelected() + "\r\n" 
-						+ "tinCheck: " + tinCheck.isSelected() + "\r\n"
-						+ "clayCheck: " + clayCheck.isSelected() + "\r\n"
-						+ "ironCheck: " + ironCheck.isSelected() + "\r\n"
-						+ "silverCheck: " + silverCheck.isSelected() + "\r\n"
-						+ "coalCheck: " + coalCheck.isSelected() + "\r\n"
-						+ "goldCheck: " + goldCheck.isSelected() + "\r\n"
-						+ "mithrilCheck: " + mithrilCheck.isSelected() + "\r\n"
-						+ "adamantiteCheck: " + adamantiteCheck.isSelected() + "\r\n"
-						+ "graniteCheck: " + graniteCheck.isSelected() + "\r\n"
-						+ "pickupOreCheck: " + pickupOreCheck.isSelected() + "\r\n"
-						+ "bankOreRadio: " + bankOreRadio.isSelected() + "\r\n"
-						+ "dropWhenFull: " + dropWhenFullRadio.isSelected() + "\r\n"
-						+ "asapDrop1: " + asapDropRadio.isSelected() + "\r\n"
-						+ "essenceCheck: " + essenceCheck.isSelected() + "\r\n"
+				output.write("copperCheck: " + copperCheck.isSelected() + System.lineSeparator()
+						+ "tinCheck: " + tinCheck.isSelected() + System.lineSeparator()
+						+ "clayCheck: " + clayCheck.isSelected() + System.lineSeparator()
+						+ "ironCheck: " + ironCheck.isSelected() + System.lineSeparator()
+						+ "silverCheck: " + silverCheck.isSelected() + System.lineSeparator()
+						+ "coalCheck: " + coalCheck.isSelected() + System.lineSeparator()
+						+ "goldCheck: " + goldCheck.isSelected() + System.lineSeparator()
+						+ "mithrilCheck: " + mithrilCheck.isSelected() + System.lineSeparator()
+						+ "adamantiteCheck: " + adamantiteCheck.isSelected() + System.lineSeparator()
+						+ "graniteCheck: " + graniteCheck.isSelected() + System.lineSeparator()
+						+ "pickupOreCheck: " + pickupOreCheck.isSelected() + System.lineSeparator()
+						+ "bankOreRadio: " + bankOreRadio.isSelected() + System.lineSeparator()
+						+ "dropWhenFull: " + dropWhenFullRadio.isSelected() + System.lineSeparator()
+						+ "asapDrop1: " + asapDropRadio.isSelected() + System.lineSeparator()
+						+ "essenceCheck: " + essenceCheck.isSelected() + System.lineSeparator()
 						);
 			} finally {
 				if (output != null) output.close();
