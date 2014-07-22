@@ -268,19 +268,9 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 
 		try {
 
-			/*if (ctx.game.getClientState() != Game.INDEX_MAP_LOADED
-					&& ctx.game.getClientState() != Game.INDEX_LOBBY_SCREEN) {
-				MyMethods.println("waiting for game to load...");
-				return 1000;
-			}*/
-
 			//if (ctx.hud.isOpen(Hud.Window.BACKPACK)) {
 			moneyGained = getMoneyGained();
 			//}
-
-			//antiPattern();
-
-			//currentMiningSubScript.execute();
 
 			for (Task task : tasks) {
 				if (task.activate()) {
@@ -299,58 +289,6 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 		MyMethods.sleep(100, 300);
 		return;
 	}
-
-	/*private void manageBankCoalBagWithdraw() {
-		MyMethods.println("manageBankCoalBagWithdraw()");
-
-		//Item coalbag = myInventory.getItem(COALBAG_ID);
-		Item coalbag = ctx.backpack.select().id(COALBAG_ID).poll();
-		if (coalbag.valid()) {
-			//if (MyMethods.interact(ctx, coalbag, "Empty", "")) {
-			if (coalbag.interact("Empty")) {
-				MyMethods.sleep(700, 1000);
-				if (ctx.backpack.select().id(Ore.COAL.getId()).count() > 0) {
-					coalBagCount = 0;
-				}
-			}
-		}
-	}	
-
-	private void manageFillCoalBag() {
-		if (debug) {
-			DebugMethods.println("manageFillCoalBag()");
-		}
-		if (ctx.backpack.select().id(Ore.COAL.getId()).count() > 0
-				&& ctx.backpack.select().count() == 28) {
-
-			//Item coalbag = myInventory.getItem(COALBAG_ID);
-			Item coalbag = ctx.backpack.select().id(COALBAG_ID).poll();
-			if (coalbag.valid()) {
-
-				int startCoalCount = ctx.backpack.select().id(Ore.COAL.getId()).count();
-				//if (MyMethods.interact(ctx, coalbag, "Fill", "")) {
-				if (coalbag.interact("Fill")) {
-					MyMethods.sleep(1100, 1400);
-					coalBagCount += startCoalCount - ctx.backpack.select().id(Ore.COAL.getId()).count();
-				}
-			}
-
-			return;
-		}
-
-	}
-
-	/*private void countInventoryOresAndGemsAsDeposited() {
-		if (MyCalculations.getSecondsSince(lastCountedDeposits) > 30) {
-			for (OreInfo oreInfo : oreInfoList) {
-				oreInfo.increaseBankCountBy(myDepositBox.getCount(oreInfo.getId()));
-			}
-			for (GemInfo gem : gems) {
-				gem.increaseBankCountBy(myDepositBox.getCount(gem.getId()));
-			}
-			lastCountedDeposits = System.currentTimeMillis();
-		}
-	}*/
 
 	public void countInventoryOresAndGemsAsBanked() {
 		if (MyCalculations.getSecondsSince(lastCountedDeposits) > 30) {
