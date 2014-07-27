@@ -42,7 +42,6 @@ import org.powerbot.script.rt6.GameObject;
 import org.powerbot.script.rt6.Skills;
 
 import tasks.Mine;
-import util.PriceLookupThread;
 
 //banned words = "mineral", "Granite"
 @Manifest(name = "Super Miner", 
@@ -137,35 +136,14 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 
 		displayname = ctx.players.local().name();
 
+		skillTracker = new SkillTracker(ctx, Skills.MINING);
+
 		Gui mygui = new Gui(ctx);
 		mygui.setVisible(true);
 
-		while (mygui.isVisible()) {
-			MyMethods.sleep(1000, 1000);
-		}
-
-		mygui.dispose();
-
-		if (debug) {
-			System.out.print("rocks selected:");
-			for (Rock rock : rocks) {
-				System.out.println(rock.getName() + ", ");
-			}
-		}
-
-		taskSetup();
-
-		new PriceLookupThread(this).start();
-
-		//pickaxeId = getInventoryPickaxeId();
-
-		skillTracker = new SkillTracker(ctx, Skills.MINING);
-
-		startTime = System.currentTimeMillis();
-
 	}
 
-	private void taskSetup() {
+	public void taskSetup() {
 
 		ArrayList<AreaInfo> areaInfos = new ArrayList<AreaInfo>() {{
 
@@ -193,6 +171,10 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 			}
 		}
 
+	}
+
+	public void startTime(long startTime) {
+		this.startTime = startTime;
 	}
 
 	public String message() {

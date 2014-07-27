@@ -19,6 +19,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import methods.MyMethods;
+
 import org.powerbot.script.rt6.ClientContext;
 
 import superMiner.Area;
@@ -28,7 +30,7 @@ import superMiner.Ore;
 import superMiner.OreInfo;
 import superMiner.Rock;
 import superMiner.SuperMiner;
-import methods.MyMethods;
+import util.PriceLookupThread;
 
 //TODO (Maybe) Add option to select AreaInfo in GUI
 //TODO use layoutManager
@@ -236,6 +238,20 @@ public class Gui extends JFrame {
 				script.dropASAP(asapDropRadio.isSelected());
 
 				setVisible(false);
+
+				if (script.debug()) {
+					System.out.print("rocks selected:");
+					for (Rock rock : script.rocks()) {
+						System.out.println(rock.getName() + ", ");
+					}
+				}
+
+				script.taskSetup();
+
+				new PriceLookupThread(script).start();
+
+				script.startTime(System.currentTimeMillis());
+				dispose();
 			}
 		});
 
