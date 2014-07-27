@@ -1,4 +1,4 @@
-package generalTasks;
+package tasks;
 
 import methods.DebugMethods;
 import methods.MyMethods;

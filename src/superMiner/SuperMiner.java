@@ -1,6 +1,7 @@
 package superMiner;
 
-import generalTasks.Mine;
+import gui.Gui;
+import gui.ShowMoreGui;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -17,6 +18,17 @@ import javax.swing.JOptionPane;
 import methods.DebugMethods;
 import methods.MyCalculations;
 import methods.MyMethods;
+import mineInfo.AlKharid;
+import mineInfo.BarbarianVillageBankEdgeville;
+import mineInfo.DropOnly;
+import mineInfo.FaladorUnderGroundBankFallyEast;
+import mineInfo.LivingRockCaverns;
+import mineInfo.LumbridgeSwampWest;
+import mineInfo.MiningGuild;
+import mineInfo.Rimmington;
+import mineInfo.VarrockEast;
+import mineInfo.VarrockWest;
+import mineInfo.Yanille;
 import myAPI.SkillTracker;
 
 import org.powerbot.script.MessageEvent;
@@ -29,20 +41,8 @@ import org.powerbot.script.rt6.ClientContext;
 import org.powerbot.script.rt6.GameObject;
 import org.powerbot.script.rt6.Skills;
 
+import tasks.Mine;
 import util.PriceLookupThread;
-import GUI.Gui;
-import GUI.ShowMoreGui;
-import areaInfo.AlKharid;
-import areaInfo.BarbarianVillageBankEdgeville;
-import areaInfo.DropOnly;
-import areaInfo.FaladorUnderGroundBankFallyEast;
-import areaInfo.LivingRockCaverns;
-import areaInfo.LumbridgeSwampWest;
-import areaInfo.MiningGuild;
-import areaInfo.Rimmington;
-import areaInfo.VarrockEast;
-import areaInfo.VarrockWest;
-import areaInfo.Yanille;
 
 //banned words = "mineral", "Granite"
 @Manifest(name = "Super Miner", 

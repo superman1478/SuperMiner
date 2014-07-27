@@ -1,11 +1,7 @@
-package areaInfo;
+package mineInfo;
 
 import java.util.ArrayList;
 
-import generalTasks.Drop;
-import generalTasks.Mine;
-import generalTasks.Pickup;
-import generalTasks.Run;
 import methods.MyMethods;
 
 import org.powerbot.script.Filter;
@@ -15,6 +11,10 @@ import org.powerbot.script.rt6.GameObject;
 
 import superMiner.AreaInfo;
 import superMiner.Task;
+import tasks.Drop;
+import tasks.Mine;
+import tasks.Pickup;
+import tasks.Run;
 
 public class DropOnly extends AreaInfo {
 

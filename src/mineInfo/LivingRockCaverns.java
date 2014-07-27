@@ -1,11 +1,4 @@
-package areaInfo;
-
-import generalTasks.Drop;
-import generalTasks.ManageDepositBox;
-import generalTasks.Mine;
-import generalTasks.Pickup;
-import generalTasks.Run;
-import generalTasks.WalkToBank;
+package mineInfo;
 
 import java.util.ArrayList;
 
@@ -29,6 +22,12 @@ import superMiner.Ore;
 import superMiner.Pickaxe;
 import superMiner.Rock;
 import superMiner.Task;
+import tasks.Drop;
+import tasks.ManageDepositBox;
+import tasks.Mine;
+import tasks.Pickup;
+import tasks.Run;
+import tasks.WalkToBank;
 import util.MiningAnimationWatcher;
 
 /**

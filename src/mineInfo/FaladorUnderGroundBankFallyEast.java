@@ -1,13 +1,4 @@
-package areaInfo;
-
-import generalTasks.Drop;
-import generalTasks.FillCoalBag;
-import generalTasks.ManageBank;
-import generalTasks.Mine;
-import generalTasks.Pickup;
-import generalTasks.Run;
-import generalTasks.WalkToBank;
-import generalTasks.WalkToMine;
+package mineInfo;
 
 import java.util.ArrayList;
 
@@ -25,6 +16,14 @@ import superMiner.AreaInfo;
 import superMiner.Ore;
 import superMiner.SuperMiner;
 import superMiner.Task;
+import tasks.Drop;
+import tasks.FillCoalBag;
+import tasks.ManageBank;
+import tasks.Mine;
+import tasks.Pickup;
+import tasks.Run;
+import tasks.WalkToBank;
+import tasks.WalkToMine;
 import util.OreInfoListMethods;
 
 public class FaladorUnderGroundBankFallyEast extends AreaInfo {

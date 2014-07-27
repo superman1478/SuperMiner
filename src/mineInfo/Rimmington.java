@@ -1,13 +1,4 @@
-package areaInfo;
-
-import generalTasks.Drop;
-import generalTasks.FillCoalBag;
-import generalTasks.ManageDepositBox;
-import generalTasks.Mine;
-import generalTasks.Pickup;
-import generalTasks.Run;
-import generalTasks.WalkToBank;
-import generalTasks.WalkToMine;
+package mineInfo;
 
 import java.util.ArrayList;
 
@@ -26,6 +17,14 @@ import superMiner.AreaInfo;
 import superMiner.Rock;
 import superMiner.SuperMiner;
 import superMiner.Task;
+import tasks.Drop;
+import tasks.FillCoalBag;
+import tasks.ManageDepositBox;
+import tasks.Mine;
+import tasks.Pickup;
+import tasks.Run;
+import tasks.WalkToBank;
+import tasks.WalkToMine;
 
 public class Rimmington extends AreaInfo {
 

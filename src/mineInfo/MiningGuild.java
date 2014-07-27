@@ -1,12 +1,4 @@
-package areaInfo;
-
-import generalTasks.Drop;
-import generalTasks.ManageBank;
-import generalTasks.Mine;
-import generalTasks.Pickup;
-import generalTasks.Run;
-import generalTasks.WalkToBank;
-import generalTasks.WalkToMine;
+package mineInfo;
 
 import java.util.ArrayList;
 
@@ -22,6 +14,13 @@ import org.powerbot.script.rt6.Skills;
 import superMiner.AreaInfo;
 import superMiner.Ore;
 import superMiner.Task;
+import tasks.Drop;
+import tasks.ManageBank;
+import tasks.Mine;
+import tasks.Pickup;
+import tasks.Run;
+import tasks.WalkToBank;
+import tasks.WalkToMine;
 import util.OreInfoListMethods;
 
 public class MiningGuild extends AreaInfo {
