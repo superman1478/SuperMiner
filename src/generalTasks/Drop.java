@@ -3,10 +3,10 @@ package generalTasks;
 import methods.ArrayMethods;
 import methods.DebugMethods;
 import methods.MyMethods;
-import myAPI.MyInventory;
 
 import org.powerbot.script.rt6.Action;
 import org.powerbot.script.rt6.ClientContext;
+import org.powerbot.script.rt6.Component;
 import org.powerbot.script.rt6.Hud;
 import org.powerbot.script.rt6.Item;
 
@@ -14,26 +14,28 @@ import superMiner.SuperMiner;
 import superMiner.Task;
 import util.OreInfoListMethods;
 
+/**
+ * If some selected ore are in the combatBar and some are not, drop order may not be maintained.
+ */
 public class Drop extends Task {
 
-	private boolean dropping = false;
+	private boolean dropping = false; //used to keep the task active until all ores and gems have been dropped
 
-	private MyInventory myInventory;
-	
 	private int[] oresIds;
 
 	public Drop(ClientContext ctx) {
 		super(ctx);
-		myInventory = new MyInventory(ctx);
 		oresIds = OreInfoListMethods.oreInfoListToIdIntArray(script().oreInfoList());
 	}
 
 	@Override
 	public boolean activate() {
 		return dropping
-				|| ctx.combatBar.expanded()
+				|| (ctx.combatBar.expanded() && !script().dropASAP())
 				|| ctx.backpack.select().count() == 28
-				|| (script().dropASAP() && myInventory.getCountExcept(SuperMiner.ITEM_IDS_TO_KEEP) != 0);
+				|| (script().dropASAP()
+						&& (ctx.backpack.select().id(SuperMiner.UNCUT_STONE_IDS).size() > 0
+								|| ctx.backpack.select().id(oresIds).size() > 0));
 	}
 
 	@Override
@@ -41,7 +43,7 @@ public class Drop extends Task {
 
 		if (ctx.backpack.select().id(SuperMiner.UNCUT_STONE_IDS).count() == 0
 				&& ctx.backpack.select().id(oresIds).count() == 0) {
-			if (ctx.combatBar.expanded(false)) {
+			if (!script().dropASAP() && ctx.combatBar.expanded(false)) {
 				MyMethods.sleep(100, 300);
 			}
 			dropping = false;
@@ -57,7 +59,9 @@ public class Drop extends Task {
 		}
 
 		destroystrangerocks();
-		if (gameModeIsEOC()) {
+		if (gameModeIsEOC()
+				&& (ctx.combatBar.select().id(SuperMiner.UNCUT_STONE_IDS).size() > 0
+						|| ctx.combatBar.select().id(oresIds).size() > 0)) {
 			dropAllUsingActionBar(SuperMiner.UNCUT_STONE_IDS);
 			dropAllUsingActionBar(oresIds);
 		} else {
@@ -77,11 +81,12 @@ public class Drop extends Task {
 		}
 
 		for (int i = 0; ctx.backpack.select().id(SuperMiner.strangerockIDs).count() > 0 && i < 50; i++) {
-			if (ctx.widgets.component(1183, 17).valid()) {
+			Component c = ctx.widgets.component(1183, 17);
+			if (c.valid()) {
 				if (script().debug()) {
 					DebugMethods.println("clickwidget 1183, 17");
 				}
-				ctx.widgets.component(1183, 17).click();
+				c.click();
 				MyMethods.sleep(700, 1000);
 			} else {
 				MyMethods.println("destroy strange rock");
@@ -112,19 +117,15 @@ public class Drop extends Task {
 		}
 
 		for (int i = 0; ctx.backpack.select().id(itemIDs).count() > 0 && i < 10; i++) {
-			if (script().debug()) {
-				DebugMethods.println("debug43943");
-			}
-			for (int j = 0; j < 28; j++) {
-				if (ctx.controller.isSuspended() || ctx.controller.isStopping()) {
-					if (script().debug()) {
-						DebugMethods.println("canceling drop");
-					}
-					return;
+			if (ctx.controller.isSuspended() || ctx.controller.isStopping()) {
+				if (script().debug()) {
+					DebugMethods.println("canceling drop");
 				}
+				return;
+			}
+			for (int j = 0; j < 28; j++) { //Drop items in order
 				Item item = ctx.backpack.itemAt(j);
-				if (ArrayMethods.arrayContainsInt(itemIDs, item.id())) {
-					MyMethods.println("Dropping " + item.name());
+				if (item.id() != -1 && ArrayMethods.arrayContainsInt(itemIDs, item.id())) {
 					if (item.interact("Drop")) {
 						MyMethods.sleep(150, 250);
 					}
@@ -156,32 +157,34 @@ public class Drop extends Task {
 			MyMethods.sleep(300, 600);
 		}
 
-		for (int itemIDIndex = 0; itemIDIndex < itemIDs.length; itemIDIndex++) {
-			Action currentAction = ctx.combatBar.select().id(itemIDs[itemIDIndex]).poll();
-			if (!currentAction.valid()) {
+		for (int i = 0; i < 56 && ctx.backpack.select().id(itemIDs).count() > 0; i++) {
+			if (ctx.controller.isSuspended() || ctx.controller.isStopping()) {
 				if (script().debug()) {
-					DebugMethods.println("action not set in actionbar");
+					DebugMethods.println("canceling drop");
 				}
-				dropAllUsingMouse(itemIDs[itemIDIndex]);
-			} else {
-				for (int i = 0; i < 55 && ctx.backpack.select().id(itemIDs[itemIDIndex]).count() > 0; i++) {
-					if (script().debug()) {
-						DebugMethods.println("selecting action " + currentAction.bind());
-					}
-					if (ctx.controller.isSuspended() || ctx.controller.isStopping()) {
+				return;
+			}
+			for (int id : itemIDs) { // loop through the itemIDs incase some are not in the actionbar
+				if (ctx.backpack.select().id(id).count() > 0) {
+					Action currentAction = ctx.combatBar.select().id(id).poll();
+					if (!currentAction.valid()) {
+						dropAllUsingMouse(id);
+						break;
+					} else {
 						if (script().debug()) {
-							DebugMethods.println("canceling drop");
+							DebugMethods.println("selecting action " + currentAction.bind());
 						}
-						return;
+						currentAction.select();
+						MyMethods.sleep(150, 250);
+						break;
 					}
-					currentAction.select();
-					MyMethods.sleep(150, 250);
 				}
 			}
 		}
+
 		if (script().debug()) {
 			DebugMethods.println("finished dropping");
 		}
 	}
-	
+
 }
