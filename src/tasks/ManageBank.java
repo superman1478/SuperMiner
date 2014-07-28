@@ -2,6 +2,7 @@ package tasks;
 
 import methods.BankMethods;
 import methods.DebugMethods;
+import methods.DepositBoxMethods;
 import methods.MyMethods;
 
 import org.powerbot.script.Tile;
@@ -24,15 +25,15 @@ public class ManageBank extends Task {
 	@Override
 	public boolean activate() {
 		return ctx.bank.opened()
+				|| ctx.depositBox.opened()
 				|| (ctx.backpack.select().count() == 28 && tileByBooth.distanceTo(ctx.players.local()) <= 4)
 				;
 	}
-	
+
 	@Override
 	public void execute() {
 
 		if (ctx.bank.opened()) {
-
 			if (ctx.backpack.select().id(SuperMiner.COALBAG_ID).count() > 0
 					&& script().coalBagCount > 0
 					&& ctx.backpack.select().count() != 28) {
@@ -55,16 +56,49 @@ public class ManageBank extends Task {
 				MyMethods.sleep(500, 800);
 			}
 
+		} else if (ctx.depositBox.open()) {
+			if (ctx.backpack.select().id(SuperMiner.COALBAG_ID).count() > 0
+					&& script().coalBagCount > 0
+					&& ctx.backpack.select().count() != 28) {
+				coalBagWithdraw();
+			}
+
+			if (ctx.backpack.select().count() < 28) {
+				ctx.depositBox.close();
+				MyMethods.sleep(100, 300);
+				return;
+			}
+
+			script().countInventoryOresAndGemsAsBanked();
+
+			if (ctx.backpack.select().id(SuperMiner.ITEM_IDS_TO_KEEP).count() > 0) {
+				DepositBoxMethods.depositAllExcept(ctx, SuperMiner.ITEM_IDS_TO_KEEP);
+				MyMethods.sleep(500, 800);
+			} else {
+				if (script().debug()) {
+					DebugMethods.println("depositing inventory");
+				}
+				ctx.depositBox.depositInventory();
+				MyMethods.sleep(500, 800);
+			}
 		} else {
 
 			if (ctx.players.local().animation() == -1) {
 				if (script().debug()) {
 					DebugMethods.println("attempting to open bank");
 				}
-				if (ctx.bank.open()) {
-					MyMethods.sleep(300, 600);
-				} else {
-					MyMethods.println("failed to open bank");
+				if (ctx.bank.nearest().tile().matrix(ctx).onMap()) {
+					if (ctx.bank.open()) {
+						MyMethods.sleep(300, 600);
+					} else {
+						MyMethods.println("failed to open bank");
+					}
+				} else if (ctx.depositBox.nearest().tile().matrix(ctx).onMap()) {
+					if (ctx.depositBox.open()) {
+						MyMethods.sleep(300, 600);
+					} else {
+						MyMethods.println("failed to depositBox");
+					}
 				}
 			}
 
