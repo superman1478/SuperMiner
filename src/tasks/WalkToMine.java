@@ -25,7 +25,8 @@ public class WalkToMine extends Task {
 	@Override
 	public boolean activate() {
 		return ctx.backpack.select().count() < 28
-				&& !areaInfo.tilesToBank()[0].matrix(ctx).onMap()
+				&& (!areaInfo.tilesToBank()[0].matrix(ctx).onMap()
+						|| areaInfo.tilesToBank()[0].distanceTo(ctx.players.local()) > 15)
 				;
 	}
 

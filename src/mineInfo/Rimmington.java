@@ -1,4 +1,4 @@
-package mineInfo;
+	package mineInfo;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ import superMiner.SuperMiner;
 import superMiner.Task;
 import tasks.Drop;
 import tasks.FillCoalBag;
-import tasks.ManageDepositBox;
+import tasks.ManageBank;
 import tasks.Mine;
 import tasks.Pickup;
 import tasks.Run;
@@ -66,7 +66,7 @@ public class Rimmington extends AreaInfo {
 			script().miningMethod("Banking");
 			MyMethods.println("Banking is enabled.");
 
-			tasks.add(new ManageDepositBox(ctx, tilesToBank[tilesToBank.length - 1]));
+			tasks.add(new ManageBank(ctx, tilesToBank[tilesToBank.length - 1]));
 			tasks.add(new PortSarimRecall(ctx, tilesToBank));
 			tasks.add(new RimmingtonWalkToBank(ctx, tilesToBank));
 			tasks.add(new WalkToMine(ctx, this));

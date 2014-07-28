@@ -23,7 +23,7 @@ import superMiner.Pickaxe;
 import superMiner.Rock;
 import superMiner.Task;
 import tasks.Drop;
-import tasks.ManageDepositBox;
+import tasks.ManageBank;
 import tasks.Mine;
 import tasks.Pickup;
 import tasks.Run;
@@ -80,7 +80,7 @@ public class LivingRockCaverns extends AreaInfo {
 		if (script().bankingEnabled()) {
 			script().miningMethod("Banking");
 			MyMethods.println("Banking is enabled.");
-			tasks.add(new ManageDepositBox(ctx, tilesToBank()[tilesToBank().length - 1]));
+			tasks.add(new ManageBank(ctx, tilesToBank()[tilesToBank().length - 1]));
 			tasks.add(new WalkToBank(ctx, tilesToBank()));
 			tasks.add(new LRCWalkToGold(ctx));
 		} else {
