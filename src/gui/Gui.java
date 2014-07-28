@@ -1,5 +1,9 @@
 package gui;
 
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -12,6 +16,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -33,7 +38,6 @@ import superMiner.SuperMiner;
 import util.PriceLookupThread;
 
 //TODO (Maybe) Add option to select AreaInfo in GUI
-//TODO use layoutManager
 @SuppressWarnings("serial")
 public class Gui extends JFrame {
 
@@ -65,30 +69,20 @@ public class Gui extends JFrame {
 
 	private JButton button1 = new JButton("Start");
 
-	public static final int FORM_WIDTH = 185, FORM_HEIGHT = 348;
-
 	private File settingsFile;
 
 	private SuperMiner script;
 	private ClientContext ctx;
 
-	public Gui(ClientContext ctx) {
+	public Gui(final ClientContext ctx) {
 		this.ctx = ctx;
 		script = (SuperMiner)ctx.controller.script();
 		settingsFile = getSettingsFile();
-		initComponents();
-	}
-
-	private void initComponents() {
-
-		//essenceCheck.setVisible(false);
 
 		setTitle("GUI");
-		setSize(FORM_WIDTH, FORM_HEIGHT);
-		setLocationRelativeTo(getOwner());
+		setLayout(new GridBagLayout());
 		setResizable(false);
-		setLayout(null);
-
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent winEvt) {
@@ -98,55 +92,82 @@ public class Gui extends JFrame {
 			}
 		});
 
-		checkboxPanel.setLayout(null);
-		checkboxPanel.setBounds(5, 5, FORM_WIDTH - 17, 140);
+		initComponents();
+		pack();
+		setLocationRelativeTo(getOwner());
+	}
+	
+	private void initComponents() {
+
 		checkboxPanel.setBorder(BorderFactory.createTitledBorder("Select Ore(s)"));
-		copperCheck.setBounds(5, 20, 70, 15);
-		checkboxPanel.add(copperCheck);
-		tinCheck.setBounds(5, 40, 70, 15);
-		checkboxPanel.add(tinCheck);
-		clayCheck.setBounds(5, 60, 70, 15);
-		checkboxPanel.add(clayCheck);
-		ironCheck.setBounds(5, 80, 70, 15);
-		checkboxPanel.add(ironCheck);
-		silverCheck.setBounds(5, 100, 60, 15);
-		checkboxPanel.add(silverCheck);
-		coalCheck.setBounds(75, 20, 60, 15);
-		checkboxPanel.add(coalCheck);
-		goldCheck.setBounds(75, 40, 60, 15);
-		checkboxPanel.add(goldCheck);
-		mithrilCheck.setBounds(75, 60, 60, 15);
-		checkboxPanel.add(mithrilCheck);
-		adamantiteCheck.setBounds(75, 80, 90, 15);
-		checkboxPanel.add(adamantiteCheck);
-		graniteCheck.setBounds(75, 100, 90, 15);
-		checkboxPanel.add(graniteCheck);
-		essenceCheck.setBounds(5, 120, 90, 15);
-		checkboxPanel.add(essenceCheck);
+		checkboxPanel.setLayout(new GridBagLayout());
 
-		add(checkboxPanel);
+		JCheckBox[] oreCheckboxes = {copperCheck, tinCheck, clayCheck, ironCheck, silverCheck,
+				essenceCheck, coalCheck, goldCheck, mithrilCheck, adamantiteCheck, graniteCheck};
 
-		radioPanel.setLayout(null);
-		radioPanel.setBounds(5, 145, FORM_WIDTH - 17, 83);
+		GridBagConstraints oreCheckboxConstraints = new GridBagConstraints();
+		oreCheckboxConstraints.gridx = 0;
+		oreCheckboxConstraints.gridy = 0;
+		oreCheckboxConstraints.anchor = GridBagConstraints.LINE_START;
+		oreCheckboxConstraints.insets = new Insets(-2, 0, -2, 0);
+		oreCheckboxConstraints.ipady = 0;
+		for (int i = 0; i < oreCheckboxes.length; i++) {
+			oreCheckboxes[i].setFocusPainted(false);
+			checkboxPanel.add(oreCheckboxes[i], oreCheckboxConstraints);
+			oreCheckboxConstraints.gridy++;
+			if (i == oreCheckboxes.length / 2) {
+				oreCheckboxConstraints.gridx++;
+				oreCheckboxConstraints.gridy = 0;
+			}
+		}
+
+		GridBagConstraints checkboxPanelConstraints = new GridBagConstraints();
+
+		checkboxPanelConstraints.gridy = 0;
+		checkboxPanelConstraints.insets = new Insets(3, 3, 0, 3);
+		checkboxPanelConstraints.fill = GridBagConstraints.BOTH;
+		add(checkboxPanel, checkboxPanelConstraints);
+
 		radioPanel.setBorder(BorderFactory.createTitledBorder("Method"));
-		dropWhenFullRadio.setBounds(5, 18, 120, 15);
+		dropWhenFullRadio.setFocusPainted(false);
 		radioPanel.add(dropWhenFullRadio);
-		asapDropRadio.setBounds(5, 38, 120, 15);
+		asapDropRadio.setFocusPainted(false);
 		radioPanel.add(asapDropRadio);
-		bankOreRadio.setBounds(5, 58, 80, 15);
+		bankOreRadio.setFocusPainted(false);
 		radioPanel.add(bankOreRadio);
-		add(radioPanel);
+
+		GridBagConstraints radioPanelConstraints = new GridBagConstraints();
+		radioPanel.setLayout(new BoxLayout(radioPanel, BoxLayout.Y_AXIS));
+		radioPanelConstraints.insets = new Insets(0, 3, 0, 3);
+		radioPanelConstraints.gridy = 1;
+		radioPanelConstraints.fill = GridBagConstraints.BOTH;
+		add(radioPanel, radioPanelConstraints);
 
 		buttonGroup.add(dropWhenFullRadio);
 		buttonGroup.add(asapDropRadio);
 		buttonGroup.add(bankOreRadio);
 
-		saveCheck.setBounds(5, 270, 110, 15);
-		add(saveCheck);
+		GridBagConstraints otherPanelConstraints = new GridBagConstraints();
+		otherPanel.setBorder(BorderFactory.createTitledBorder("Other"));
+		otherPanel.setLayout(new BorderLayout());
+		otherPanel.add(pickupOreCheck, BorderLayout.LINE_START);
+		otherPanelConstraints.gridy = 2;
+		otherPanelConstraints.insets = new Insets(0, 3, 0, 3);
+		otherPanelConstraints.fill = GridBagConstraints.BOTH;
+		add(otherPanel, otherPanelConstraints);
 
-		button1.setBounds(5, 290, FORM_WIDTH - 17, 25);
-		add(button1);
+		GridBagConstraints saveCheckConstraints = new GridBagConstraints();
+		saveCheckConstraints.gridy = 3;
+		saveCheckConstraints.insets = new Insets(0, 4, 0, 0);
+		saveCheckConstraints.fill = GridBagConstraints.BOTH;
+		saveCheck.setFocusPainted(false);
+		add(saveCheck, saveCheckConstraints);
 
+		GridBagConstraints button1Constraints = new GridBagConstraints();
+		button1Constraints.gridy = 4;
+		button1Constraints.insets = new Insets(0, 5, 5, 5);
+		button1Constraints.fill = GridBagConstraints.BOTH;
+		button1.setFocusPainted(false);
 		button1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -254,13 +275,13 @@ public class Gui extends JFrame {
 				dispose();
 			}
 		});
+		add(button1, button1Constraints);
 
-		otherPanel.setLayout(null);
-		otherPanel.setBounds(5, 225, FORM_WIDTH - 17, 43);
-		otherPanel.setBorder(BorderFactory.createTitledBorder("Other"));
-		pickupOreCheck.setBounds(5, 18, 130, 15);
-		otherPanel.add(pickupOreCheck);
-		add(otherPanel);
+		updateSettings();
+
+	}
+
+	private void updateSettings() {
 
 		if (settingsFile.exists()) {
 			readSettings();
@@ -343,10 +364,6 @@ public class Gui extends JFrame {
 		}
 
 	}
-	
-	public JButton getButton1() {
-		return button1;
-	}
 
 	private void readSettings() {
 
@@ -412,12 +429,10 @@ public class Gui extends JFrame {
 
 		System.out.println("storageDir.getAbsolutePath(): " + storageDir.getAbsolutePath());
 
-		//String packageName = script.getClass().getPackage().getName();
-		
 		String tempDirPath = storageDir.getAbsolutePath().split("RSBot")[0];
 
 		String stringpath = tempDirPath + "RSBot" + File.separator + script.getName();
-		
+
 		File dir = new File(stringpath);
 
 		if (!dir.exists()) {
