@@ -32,9 +32,7 @@ public class WalkToMine extends Task {
 
 	@Override
 	public void execute() {
-		if (script().debug()) {
-			DebugMethods.println("walking to " + tilePath.next());
-		}
+		DebugMethods.println(script().debug(), "walking to " + tilePath.next());
 		if (tilePath.traverse()) {
 			MyMethods.sleep(400, 700);
 		}

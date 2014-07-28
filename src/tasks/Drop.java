@@ -76,16 +76,12 @@ public class Drop extends Task {
 
 	private void destroystrangerocks() {
 
-		if (script().debug()) {
-			MyMethods.println("destroystrangerocks()");
-		}
+		DebugMethods.println(script().debug(), "destroystrangerocks()");
 
 		for (int i = 0; ctx.backpack.select().id(SuperMiner.strangerockIDs).count() > 0 && i < 50; i++) {
 			Component c = ctx.widgets.component(1183, 17);
 			if (c.valid()) {
-				if (script().debug()) {
-					DebugMethods.println("clickwidget 1183, 17");
-				}
+				DebugMethods.println(script().debug(), "clickwidget 1183, 17");
 				c.click();
 				MyMethods.sleep(700, 1000);
 			} else {
@@ -102,9 +98,7 @@ public class Drop extends Task {
 
 	public void dropAllUsingMouse(int... itemIDs) {
 
-		if (script().debug()) {
-			MyMethods.println("dropAllUsingMouse(int... itemIDs) ");
-		}
+		DebugMethods.println(script().debug(), "dropAllUsingMouse(int... itemIDs) ");
 
 		for (int i = 0; !ctx.hud.opened(Hud.Window.BACKPACK) && i < 10; i++) {
 			ctx.hud.open(Hud.Window.BACKPACK);
@@ -118,9 +112,7 @@ public class Drop extends Task {
 
 		for (int i = 0; ctx.backpack.select().id(itemIDs).count() > 0 && i < 10; i++) {
 			if (ctx.controller.isSuspended() || ctx.controller.isStopping()) {
-				if (script().debug()) {
-					DebugMethods.println("canceling drop");
-				}
+				DebugMethods.println(script().debug(), "canceling drop");
 				return;
 			}
 			for (int j = 0; j < 28; j++) { //Drop items in order
@@ -137,9 +129,7 @@ public class Drop extends Task {
 
 	private void dropAllUsingActionBar(int... itemIDs) {
 
-		if (script().debug()) {
-			MyMethods.println("dropAllUsingActionBar(int... itemIDs) ");
-		}
+		DebugMethods.println(script().debug(), "dropAllUsingActionBar(int... itemIDs) ");
 
 		for (int i = 0;!ctx.combatBar.expanded() && i < 10; i++) {
 			ctx.combatBar.expanded(true);
@@ -159,9 +149,7 @@ public class Drop extends Task {
 
 		for (int i = 0; i < 56 && ctx.backpack.select().id(itemIDs).count() > 0; i++) {
 			if (ctx.controller.isSuspended() || ctx.controller.isStopping()) {
-				if (script().debug()) {
-					DebugMethods.println("canceling drop");
-				}
+				DebugMethods.println(script().debug(), "canceling drop");
 				return;
 			}
 			for (int id : itemIDs) { // loop through the itemIDs incase some are not in the actionbar
@@ -171,9 +159,7 @@ public class Drop extends Task {
 						dropAllUsingMouse(id);
 						break;
 					} else {
-						if (script().debug()) {
-							DebugMethods.println("selecting action " + currentAction.bind());
-						}
+						DebugMethods.println(script().debug(), "selecting action " + currentAction.bind());
 						currentAction.select();
 						MyMethods.sleep(150, 250);
 						break;
@@ -182,9 +168,7 @@ public class Drop extends Task {
 			}
 		}
 
-		if (script().debug()) {
-			DebugMethods.println("finished dropping");
-		}
+		DebugMethods.println(script().debug(), "finished dropping");
 	}
 
 }

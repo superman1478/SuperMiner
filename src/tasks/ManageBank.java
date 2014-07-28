@@ -75,18 +75,14 @@ public class ManageBank extends Task {
 				DepositBoxMethods.depositAllExcept(ctx, SuperMiner.ITEM_IDS_TO_KEEP);
 				MyMethods.sleep(500, 800);
 			} else {
-				if (script().debug()) {
-					DebugMethods.println("depositing inventory");
-				}
+				DebugMethods.println(script().debug(), "depositing inventory");
 				ctx.depositBox.depositInventory();
 				MyMethods.sleep(500, 800);
 			}
 		} else {
 
 			if (ctx.players.local().animation() == -1) {
-				if (script().debug()) {
-					DebugMethods.println("attempting to open bank");
-				}
+				DebugMethods.println(script().debug(), "attempting to open bank");
 				if (ctx.bank.nearest().tile().matrix(ctx).onMap()) {
 					if (ctx.bank.open()) {
 						MyMethods.sleep(300, 600);
@@ -107,9 +103,7 @@ public class ManageBank extends Task {
 	}
 	
 	private void coalBagWithdraw() {
-		if (script().debug()) {
-			DebugMethods.println("manageColaBagWithdraw()");
-		}
+		DebugMethods.println(script().debug(), "manageColaBagWithdraw()");
 		Item coalbag = ctx.backpack.select().id(SuperMiner.COALBAG_ID).poll();
 		if (coalbag.valid()) {
 			if (coalbag.interact("Withdraw-many")) {

@@ -199,41 +199,29 @@ public class LivingRockCaverns extends AreaInfo {
 		public void execute() {
 			GameObject deposit = ctx.objects.select().id(Rock.GOLD_MINERAL_DEPOSIT.getIds()).nearest().poll();
 			if (deposit.valid()) {
-				if (script().debug()) {
-					DebugMethods.println("deposit valid");
-				}
+				DebugMethods.println(script().debug(), "deposit valid");
 				if (deposit.tile().equals(WEST_MINERAL_DEPOSIT_LOCATION)) {
 					westDepositHadGoldAt = System.currentTimeMillis();
-					if (script().debug()) {
-						DebugMethods.println("deposit valid pathToWestDeposit.traverse()");
-					}
+					DebugMethods.println(script().debug(), "deposit valid pathToWestDeposit.traverse()");
 					pathToWestDeposit.traverse();
 					MyMethods.sleep(100, 400);
 				} else { //ore is east
 					eastDepositHadGoldAt = System.currentTimeMillis();
-					if (script().debug()) {
-						DebugMethods.println("deposit valid pathToEastDeposit.traverse()");
-					}
+					DebugMethods.println(script().debug(), "deposit valid pathToEastDeposit.traverse()");
 					pathToEastDeposit.traverse();
 					MyMethods.sleep(100, 400);
 				}
 			} else {//TODO conitnue testing
-				if (script().debug()) {
-					DebugMethods.println("deposit not valid");
-				}
+				DebugMethods.println(script().debug(), "deposit not valid");
 				if (eastDepositHadGoldAt > westDepositHadGoldAt) { //gold was at east last, go to west
 					if (WEST_MINERAL_DEPOSIT_LOCATION.distanceTo(ctx.players.local()) > 4) {
-						if (script().debug()) {
-							DebugMethods.println("pathToWestDeposit.traverse()");
-						}
+						DebugMethods.println(script().debug(), "pathToWestDeposit.traverse()");
 						pathToWestDeposit.traverse();
 						MyMethods.sleep(100, 400);
 					}
 				} else {
 					if (EAST_MINERAL_DEPOSIT_LOCATION.distanceTo(ctx.players.local()) > 4) {
-						if (script().debug()) {
-							DebugMethods.println("pathToEastDeposit.traverse()");
-						}
+						DebugMethods.println(script().debug(), "pathToEastDeposit.traverse()");
 						pathToEastDeposit.traverse();
 						MyMethods.sleep(100, 400);
 					}
@@ -273,9 +261,7 @@ public class LivingRockCaverns extends AreaInfo {
 		public void execute() {
 			if (LivingRockCaverns.TO_PULLEY_LIFT_TILES[LivingRockCaverns.TO_PULLEY_LIFT_TILES.length - 1]
 					.distanceTo(ctx.players.local()) > 5) {
-				if (script().debug()) {
-					DebugMethods.println("pathToBank.traverse()");
-				}
+				DebugMethods.println(script().debug(), "pathToBank.traverse()");
 				pathToBank.traverse();
 				MyMethods.sleep(200, 500);
 			}
@@ -381,9 +367,7 @@ public class LivingRockCaverns extends AreaInfo {
 				}
 
 			} else {
-				if (script().debug()) {
-					DebugMethods.println("PathToLRC.traverse()");
-				}
+				DebugMethods.println(script().debug(), "PathToLRC.traverse()");
 				PathToLRC.traverse();
 			}
 
@@ -408,15 +392,13 @@ public class LivingRockCaverns extends AreaInfo {
 		@Override
 		public void execute() {
 
-			if (script().debug()) {
-				DebugMethods.println("managefaladorUnderGroundArea()");
-			}
+			DebugMethods.println(script().debug(), "managefaladorUnderGroundArea()");
 
 			GameObject rope = ctx.objects.select().id(45077).nearest().poll();
 			if (rope.valid() && rope.tile().distanceTo(ctx.players.local()) < 5) {
 				MyMethods.println("rope is less than 5 distance");
 				if (rope.inViewport()) {
-					DebugMethods.println("rope is on screen");
+					DebugMethods.println(script().debug(), "rope is on screen");
 					Component c = ctx.widgets.component(1262, 18);
 					if (c.text().contains("Proceed regardless")) {
 						c.click();
@@ -432,9 +414,7 @@ public class LivingRockCaverns extends AreaInfo {
 					ctx.camera.turnTo(rope);
 				}
 			} else {
-				if (script().debug()) {
-					DebugMethods.println("PathToLRC.traverse()");
-				}
+				DebugMethods.println(script().debug(), "PathToLRC.traverse()");
 				PathToLRC.traverse();
 			}
 
@@ -472,9 +452,7 @@ public class LivingRockCaverns extends AreaInfo {
 					MyMethods.sleep(600, 900);
 				}
 			} else {
-				if (script().debug()) {
-					DebugMethods.println("pathToDwarvenLadderFromEdge.traverse()");
-				}
+				DebugMethods.println(script().debug(), "pathToDwarvenLadderFromEdge.traverse()");
 				pathToDwarvenLadderFromEdge.traverse();
 			}
 		}

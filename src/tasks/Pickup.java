@@ -28,9 +28,7 @@ public class Pickup extends Task {
 	//return true if there is an item to pickup
 	private boolean pickupOre(int oreId) {
 
-		if (script().debug()) {
-			DebugMethods.println("pickupOre(" + oreId + ")");
-		}
+		DebugMethods.println(script().debug(), "pickupOre(" + oreId + ")");
 
 		//GroundItem groundOre = getNearestGroundItem(oreID);
 		GroundItem groundOre = ctx.groundItems.select().id(oreId).nearest().poll();
@@ -51,10 +49,8 @@ public class Pickup extends Task {
 
 			return true;
 		} else {
-			if (script().debug()) {
-				DebugMethods.println("groundOre is null or is unreachable");
-			}
-		}	
+			DebugMethods.println(script().debug(), "groundOre is null or is unreachable");
+		}
 		return false;
 	}
 
@@ -64,15 +60,11 @@ public class Pickup extends Task {
 	 */
 	private boolean checkForAndPickupOre() {
 
-		if (script().debug()) {
-			MyMethods.println("manageOrePickup()");
-		}
+		DebugMethods.println(script().debug(), "manageOrePickup()");
 
 		for (OreInfo ore : script().oreInfoList()) {
 			if (pickupOre(ore.getId())) {
-				if (script().debug()) {
-					DebugMethods.println(ore.getName() + " ore found on ground");
-				}
+				DebugMethods.println(script().debug(), ore.getName() + " ore found on ground");
 				return true;
 			}
 		}

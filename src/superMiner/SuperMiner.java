@@ -115,9 +115,7 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 	@Override
 	public void start() {
 
-		if (debug) {
-			System.out.println("start");
-		}
+		DebugMethods.println(debug, "start");
 
 		if (!ctx.game.loggedIn()) {
 			MyMethods.println("Please login before starting the script.");
@@ -244,9 +242,7 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 	@Override
 	public void poll() {
 
-		if (debug) {
-			DebugMethods.println("poll()");
-		}
+		DebugMethods.println(debug, "poll()");
 
 		try {
 
@@ -256,9 +252,7 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 
 			for (Task task : tasks) {
 				if (task.activate()) {
-					if (debug) {
-						DebugMethods.println(task.getClass().getSimpleName() + ".execute()");
-					}
+					DebugMethods.println(debug, task.getClass().getSimpleName() + ".execute()");
 					task.execute();
 					break;
 				}

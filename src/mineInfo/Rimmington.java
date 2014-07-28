@@ -178,16 +178,12 @@ public class Rimmington extends AreaInfo {
 				if (!rock.inViewport()) {
 
 					if (rock.tile().distanceTo(ctx.players.local()) < 8) {
-						if (script().debug()) {
-							DebugMethods.println("turning camera to rock");
-						}
+						DebugMethods.println(script().debug(), "turning camera to rock");
 						ctx.camera.turnTo(rock);
 					}
 
 					if (!rock.inViewport()) {
-						if (script().debug()) {
-							DebugMethods.println("walking to rock");
-						}
+						DebugMethods.println(script().debug(), "walking to rock");
 						if (ArrayMethods.arrayContainsInt(Rock.IRON.getIds(), rock.id())) {
 							int newTileX = rock.tile().x();
 							int newTileY = rock.tile().y();
@@ -207,9 +203,7 @@ public class Rimmington extends AreaInfo {
 					}
 				}
 
-				if (script().debug()) {
-					DebugMethods.println("interact with rock");
-				}
+				DebugMethods.println(script().debug(), "interact with rock");
 				if (!rock.name().isEmpty() && rock.interact("Mine", rock.name())) {
 					MyMethods.sleep(1100, 1400);
 				}

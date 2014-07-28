@@ -48,14 +48,12 @@ public class Mine extends Task {
 
 	public boolean mineRock(GameObject rock) {
 
-		if (script().debug()) {
-			DebugMethods.println("mineRock(GameObject rock)");
-			if (rock.valid()) {
-				DebugMethods.println("rock != null");
-				DebugMethods.println("rock.name(): " + rock.name());
-			} else {
-				DebugMethods.println("rock == null");
-			}
+		DebugMethods.println(script().debug(), "mineRock(GameObject rock)");
+		if (rock.valid()) {
+			DebugMethods.println(script().debug(), "rock != null");
+			DebugMethods.println(script().debug(), "rock.name(): " + rock.name());
+		} else {
+			DebugMethods.println(script().debug(), "rock == null");
 		}
 
 		/*if (rock.tile().distanceTo(ctx.players.local()) > 18) {
@@ -66,25 +64,19 @@ public class Mine extends Task {
 			if (!rock.inViewport()) {
 
 				if (rock.tile().distanceTo(ctx.players.local()) < 7) {
-					if (script().debug()) {
-						DebugMethods.println("turning camera to rock");
-					}
+					DebugMethods.println(script().debug(), "turning camera to rock");
 					ctx.camera.turnTo(rock);
 				}
 
 				if (!rock.inViewport()) {
-					if (script().debug()) {
-						DebugMethods.println("walking to rock");
-					}
+					DebugMethods.println(script().debug(), "walking to rock");
 					ctx.movement.step(rock);
 					MyMethods.sleep(100, 300);
 					return false;
-				}	
+				}
 			}
 
-			if (script().debug()) {
-				DebugMethods.println("doing interact: \"" + "Mine " + rock.name() + "\"");
-			}
+			DebugMethods.println(script().debug(), "doing interact: \"" + "Mine " + rock.name() + "\"");
 			if (!rock.name().isEmpty()
 					//&& MyMethods.interact(ctx, rock, "Mine", rock.name())) {
 					&& rock.interact("Mine", rock.name())) {

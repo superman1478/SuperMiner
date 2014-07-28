@@ -123,14 +123,14 @@ public class FaladorUnderGroundBankFallyEast extends AreaInfo {
 				mineRock(rock);
 			} else {
 				if (OreInfoListMethods.ListContains(script().oreInfoList(), Ore.COAL)) {
-					DebugMethods.println("4585");
+					DebugMethods.println(script().debug(), "4585");
 					if (coalWaitTile.distanceTo(ctx.players.local()) > 6) {
 						MyMethods.println("walking to coalWaitTile");
 						ctx.movement.step(coalWaitTile);
 						MyMethods.sleep(100, 300);
 					}
 				} else if (OreInfoListMethods.ListContains(script().oreInfoList(), Ore.IRON)) {
-					DebugMethods.println("4587");
+					DebugMethods.println(script().debug(), "4587");
 					if (ironWaitTile.distanceTo(ctx.players.local()) > 6) {
 						MyMethods.println("walking to ironWaitTile");
 						ctx.movement.step(ironWaitTile);
