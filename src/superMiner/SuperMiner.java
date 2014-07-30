@@ -108,7 +108,7 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 
 	private ArrayList<Task> tasks = new ArrayList<Task>();
 
-	private AreaInfo areaInfo = null;
+	private MineInfo areaInfo = null;
 
 	@Override
 	public void start() {
@@ -141,7 +141,7 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 
 	public void taskSetup() {
 
-		ArrayList<AreaInfo> areaInfos = new ArrayList<AreaInfo>() {{
+		ArrayList<MineInfo> areaInfos = new ArrayList<MineInfo>() {{
 
 			add(new AlKharid(ctx));
 			add(new BarbarianVillageBankEdgeville(ctx));
@@ -158,7 +158,7 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 
 		}};
 
-		for (AreaInfo areaInfo : areaInfos) {
+		for (MineInfo areaInfo : areaInfos) {
 			if (areaInfo.shouldBeUsed()) {
 				MyMethods.println(areaInfo.getClass().getSimpleName() + " selected");
 				this.areaInfo = areaInfo;

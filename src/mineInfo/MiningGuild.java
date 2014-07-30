@@ -11,7 +11,7 @@ import org.powerbot.script.rt6.ClientContext;
 import org.powerbot.script.rt6.GameObject;
 import org.powerbot.script.rt6.Skills;
 
-import superMiner.AreaInfo;
+import superMiner.MineInfo;
 import superMiner.Ore;
 import superMiner.Task;
 import tasks.Drop;
@@ -23,7 +23,7 @@ import tasks.WalkToBank;
 import tasks.WalkToMine;
 import util.OreInfoListMethods;
 
-public class MiningGuild extends AreaInfo {
+public class MiningGuild extends MineInfo {
 
 	private final Tile[] toFaladorEastTiles = {new Tile(3047, 9750, 0), new Tile(3046, 9740, 0), new Tile(3036, 9736, 0),
 			new Tile(3026, 9737, 0), new Tile(3021, 9739, 0), new Tile(3021, 3339, 0), new Tile(3030, 3337, 0),

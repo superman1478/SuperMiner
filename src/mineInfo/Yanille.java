@@ -10,7 +10,7 @@ import org.powerbot.script.rt6.ClientContext;
 import org.powerbot.script.rt6.GameObject;
 
 import superMiner.Area;
-import superMiner.AreaInfo;
+import superMiner.MineInfo;
 import superMiner.SuperMiner;
 import superMiner.Task;
 import tasks.Drop;
@@ -22,7 +22,7 @@ import tasks.Run;
 import tasks.WalkToBank;
 import tasks.WalkToMine;
 
-public class Yanille extends AreaInfo {
+public class Yanille extends MineInfo {
 
 	private final Tile[] tilesToBank = new Tile[] {new Tile(2629, 3151, 0), new Tile(2626, 3141, 0),
 			new Tile(2629, 3131, 0), new Tile(2627, 3121, 0), new Tile(2621, 3113, 0), new Tile(2615, 3105, 0),

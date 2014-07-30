@@ -13,7 +13,7 @@ import org.powerbot.script.rt6.ClientContext;
 import org.powerbot.script.rt6.GameObject;
 
 import superMiner.Area;
-import superMiner.AreaInfo;
+import superMiner.MineInfo;
 import superMiner.Rock;
 import superMiner.SuperMiner;
 import superMiner.Task;
@@ -26,7 +26,7 @@ import tasks.Run;
 import tasks.WalkToBank;
 import tasks.WalkToMine;
 
-public class Rimmington extends AreaInfo {
+public class Rimmington extends MineInfo {
 
 	private final Tile[] tilesToBank = new Tile[] {new Tile(2970, 3237, 0), new Tile(2972, 3247, 0),
 			new Tile(2982, 3251, 0), new Tile(2992, 3249, 0), new Tile(3002, 3246, 0), new Tile(3012, 3243, 0),
@@ -165,7 +165,7 @@ public class Rimmington extends AreaInfo {
 
 	private static class RimmingtonMine extends Mine {
 
-		public RimmingtonMine(ClientContext ctx, AreaInfo areaInfo) {
+		public RimmingtonMine(ClientContext ctx, MineInfo areaInfo) {
 			super(ctx, areaInfo);
 		}
 

@@ -13,7 +13,7 @@ import org.powerbot.script.rt6.GameObject;
 import org.powerbot.script.rt6.Skills;
 
 import superMiner.Area;
-import superMiner.AreaInfo;
+import superMiner.MineInfo;
 import superMiner.Ore;
 import superMiner.SuperMiner;
 import superMiner.Task;
@@ -27,7 +27,7 @@ import tasks.WalkToBank;
 import tasks.WalkToMine;
 import util.OreInfoListMethods;
 
-public class AlKharid extends AreaInfo {
+public class AlKharid extends MineInfo {
 	
 	private Tile[] tilesToBank = new Tile[] {new Tile(3300, 3313, 0), new Tile(3300, 3303, 0),
 			new Tile(3300, 3293, 0),new Tile(3299, 3283, 0), new Tile(3298, 3275, 0), new Tile(3295, 3265, 0),

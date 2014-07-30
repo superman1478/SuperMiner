@@ -12,7 +12,7 @@ import org.powerbot.script.rt6.GameObject;
 import org.powerbot.script.rt6.Skills;
 
 import superMiner.Area;
-import superMiner.AreaInfo;
+import superMiner.MineInfo;
 import superMiner.Ore;
 import superMiner.SuperMiner;
 import superMiner.Task;
@@ -26,7 +26,7 @@ import tasks.WalkToBank;
 import tasks.WalkToMine;
 import util.OreInfoListMethods;
 
-public class FaladorUnderGroundBankFallyEast extends AreaInfo {
+public class FaladorUnderGroundBankFallyEast extends MineInfo {
 
 	private final Tile[] tilesToBank = new Tile[] {new Tile(3043, 9770, 0), new Tile(3050, 9770, 0),
 			new Tile(3058, 9778, 0), new Tile(3061, 3377, 0), new Tile(3058, 3370, 0), new Tile(3050, 3370, 0),
@@ -110,7 +110,7 @@ public class FaladorUnderGroundBankFallyEast extends AreaInfo {
 
 		private final Tile coalWaitTile = new Tile(3045, 9769, 0);
 
-		public FaladorUnderGroundMine(ClientContext ctx, AreaInfo areaInfo) {
+		public FaladorUnderGroundMine(ClientContext ctx, MineInfo areaInfo) {
 			super(ctx, areaInfo);
 		}
 

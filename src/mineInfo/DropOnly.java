@@ -9,14 +9,14 @@ import org.powerbot.script.Tile;
 import org.powerbot.script.rt6.ClientContext;
 import org.powerbot.script.rt6.GameObject;
 
-import superMiner.AreaInfo;
+import superMiner.MineInfo;
 import superMiner.Task;
 import tasks.Drop;
 import tasks.Mine;
 import tasks.Pickup;
 import tasks.Run;
 
-public class DropOnly extends AreaInfo {
+public class DropOnly extends MineInfo {
 
 	private final Tile[] tilesToBank = new Tile[]{};
 

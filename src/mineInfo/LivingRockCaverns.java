@@ -17,7 +17,7 @@ import org.powerbot.script.rt6.Skills;
 import org.powerbot.script.rt6.TilePath;
 
 import superMiner.Area;
-import superMiner.AreaInfo;
+import superMiner.MineInfo;
 import superMiner.Ore;
 import superMiner.Pickaxe;
 import superMiner.Rock;
@@ -33,7 +33,7 @@ import util.MiningAnimationWatcher;
 /**
  * TODO Add coal support
  */
-public class LivingRockCaverns extends AreaInfo {
+public class LivingRockCaverns extends MineInfo {
 
 	private static final Tile[] TO_LRC_TILES = {new Tile(2965, 3380, 0), new Tile(2975, 3380, 0),
 		new Tile(2984, 3375, 0), new Tile(3022, 3330, 0), new Tile(2990, 3370, 0), new Tile(2999, 3365, 0),
@@ -118,7 +118,7 @@ public class LivingRockCaverns extends AreaInfo {
 		
 		private MiningAnimationWatcher miningAnimationWatcher;
 
-		public LRCMine(ClientContext ctx, AreaInfo areaInfo) {
+		public LRCMine(ClientContext ctx, MineInfo areaInfo) {
 			super(ctx, areaInfo);
 			miningAnimationWatcher = new MiningAnimationWatcher(ctx);
 			miningAnimationWatcher.start();

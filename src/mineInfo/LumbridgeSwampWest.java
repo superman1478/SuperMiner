@@ -10,7 +10,7 @@ import org.powerbot.script.rt6.ClientContext;
 import org.powerbot.script.rt6.GameObject;
 
 import superMiner.Area;
-import superMiner.AreaInfo;
+import superMiner.MineInfo;
 import superMiner.SuperMiner;
 import superMiner.Task;
 import tasks.Drop;
@@ -22,7 +22,7 @@ import tasks.Run;
 import tasks.WalkToBank;
 import tasks.WalkToMine;
 
-public class LumbridgeSwampWest extends AreaInfo {
+public class LumbridgeSwampWest extends MineInfo {
 
 	private final Tile[] tilesToBank = new Tile[] {new Tile(3148, 3146, 0), new Tile(3148, 3156, 0),
 			new Tile(3148, 3166, 0), new Tile(3144, 3176, 0), new Tile(3142, 3186, 0),

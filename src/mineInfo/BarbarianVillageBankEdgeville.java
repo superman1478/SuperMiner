@@ -10,7 +10,7 @@ import org.powerbot.script.rt6.ClientContext;
 import org.powerbot.script.rt6.GameObject;
 
 import superMiner.Area;
-import superMiner.AreaInfo;
+import superMiner.MineInfo;
 import superMiner.Ore;
 import superMiner.SuperMiner;
 import superMiner.Task;
@@ -24,7 +24,7 @@ import tasks.WalkToBank;
 import tasks.WalkToMine;
 import util.OreInfoListMethods;
 
-public class BarbarianVillageBankEdgeville extends AreaInfo {
+public class BarbarianVillageBankEdgeville extends MineInfo {
 
 	//tilesToBank will change if user is mining clay
 	private Tile[] tilesToBank = new Tile[] {new Tile(3084, 3423, 0), new Tile(3087, 3433, 0), 

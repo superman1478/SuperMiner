@@ -7,12 +7,12 @@ import org.powerbot.script.Tile;
 import org.powerbot.script.rt6.ClientContext;
 import org.powerbot.script.rt6.GameObject;
 
-public abstract class AreaInfo {
+public abstract class MineInfo {
 
 	public ClientContext ctx;
 	private SuperMiner script;
 
-	public AreaInfo (ClientContext ctx) {
+	public MineInfo (ClientContext ctx) {
 		this.ctx = ctx;
 		script = (SuperMiner)ctx.controller.script();
 	}

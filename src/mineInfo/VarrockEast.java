@@ -10,7 +10,7 @@ import org.powerbot.script.rt6.ClientContext;
 import org.powerbot.script.rt6.GameObject;
 
 import superMiner.Area;
-import superMiner.AreaInfo;
+import superMiner.MineInfo;
 import superMiner.Task;
 import tasks.Drop;
 import tasks.ManageBank;
@@ -20,7 +20,7 @@ import tasks.Run;
 import tasks.WalkToBank;
 import tasks.WalkToMine;
 
-public class VarrockEast extends AreaInfo {
+public class VarrockEast extends MineInfo {
 	
 	private final Tile[] tilesToBank = new Tile[] {new Tile(3285, 3362, 0), new Tile(3287, 3372, 0),
 			new Tile(3293, 3378, 0), new Tile(3292, 3383, 0), new Tile(3292, 3387, 0),

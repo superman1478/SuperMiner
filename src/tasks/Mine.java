@@ -7,15 +7,15 @@ import methods.MyMethods;
 import org.powerbot.script.rt6.ClientContext;
 import org.powerbot.script.rt6.GameObject;
 
-import superMiner.AreaInfo;
+import superMiner.MineInfo;
 import superMiner.Rock;
 import superMiner.Task;
 
 public class Mine extends Task {
 
-	private AreaInfo areaInfo;
+	private MineInfo areaInfo;
 
-	public Mine(ClientContext ctx, AreaInfo areaInfo) {
+	public Mine(ClientContext ctx, MineInfo areaInfo) {
 		super(ctx);
 		this.areaInfo = areaInfo;
 	}
