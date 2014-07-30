@@ -139,6 +139,13 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 
 	}
 
+	/**
+	 * This method is used to select the MineInfo that will work best for the local player's
+	 * location, skills and selected ores.
+	 * <p>
+	 * Once the MineInfo has been determined, its tasks will be added to tasks.
+	 *
+	 */
 	public void taskSetup() {
 
 		ArrayList<MineInfo> areaInfos = new ArrayList<MineInfo>() {{
