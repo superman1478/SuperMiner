@@ -97,10 +97,8 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 	public int coalBagCount = 0;
 
 	private ArrayList<OreInfo> oreInfoList = new ArrayList<OreInfo>();
-	public GemInfo[] gems = new GemInfo[0];
+	public GemInfo[] gemInfos = new GemInfo[0];
 	private ArrayList<Rock> rocks = new ArrayList<Rock>();
-
-	private long lastCountedDeposits = System.currentTimeMillis() - 30000;
 
 	private int moneyGained = 0;
 
@@ -111,7 +109,7 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 	private ArrayList<Task> tasks = new ArrayList<Task>();
 
 	private AreaInfo areaInfo = null;
-	
+
 	@Override
 	public void start() {
 
@@ -266,62 +264,6 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 		return;
 	}
 
-	public void countInventoryOresAndGemsAsBanked() {
-		if (MyCalculations.getSecondsSince(lastCountedDeposits) > 30) {
-			for (OreInfo oreInfo : oreInfoList) {
-				oreInfo.increaseBankCountBy(ctx.backpack.select().id(oreInfo.getId()).count());
-			}
-			for (GemInfo gem : gems) {
-				gem.increaseBankCountBy(ctx.backpack.select().id(gem.getId()).count());
-			}
-			lastCountedDeposits = System.currentTimeMillis();
-		}
-	}
-
-	@Override
-	public void messaged(MessageEvent e) {
-
-		if(e.source().isEmpty()) {
-
-			String msg = e.text();
-
-			/*for (Ore2 ore : ores) {
-				if (msg.contains(ore.getName().toLowerCase())) {
-					ore.incrementCount();
-					return;
-				}
-			}*/ 
-
-			if (msg.contains("You'll need to activate")) {
-				useLodestone = false;
-			} else if (msg.contains("Your coal bag is already")) {
-				coalBagCount = 27;
-			} else if (msg.contains("There is no coal in")) {
-				coalBagCount = 0;
-				//} else if (msg.contains("Oh dear, you are d")) {
-				//if (!currentMiningSubScript.getClass().getName().equals("LivingRockCavern")) {
-				//MyMethods.println(msg);
-				//shutdown();	
-				//}
-			}
-
-		}
-	}
-
-	@Override
-	public void stop() {
-
-		if (skillTracker == null) {
-			MyMethods.println("stopping");
-			return;
-		}
-
-		MyMethods.println(displayname + " Stopped after " + MyMethods.formattedTimeSince(startTime));
-		MyMethods.println("Levels Gained: " + skillTracker.getLevelsGained());
-		MyMethods.println("Experience Gained: " + skillTracker.getExperienceGained());
-		MyMethods.println("Experience / Hour: " + MyMethods.formatDouble(skillTracker.getExperiencePerHour()));
-	}
-
 	@Override
 	public void repaint(Graphics g) {
 
@@ -411,7 +353,7 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 				y += 15;
 			}
 
-			for (GemInfo gem : gems) {
+			for (GemInfo gem : gemInfos) {
 				g.setColor(PaintBackgroundColor);
 				g.fillRect(x - 5, y - 7, 129, 15);
 				g.setColor(Color.RED);
@@ -473,16 +415,77 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 		int moneyGained = 0;
 
 		for (OreInfo oreInfo : oreInfoList) {
-			oreInfo.updateInventoryCount();
 			moneyGained += oreInfo.getCount() * oreInfo.getPrice();
 		}
 
-		for (GemInfo gem : gems) {
-			gem.updateInventoryCount();
+		for (GemInfo gem : gemInfos) {
 			moneyGained += gem.getCount() * gem.getPrice();
 		}
 
 		return moneyGained;
+	}
+
+	@Override
+	public void messaged(MessageEvent e) {
+
+		if(e.source().isEmpty()) {
+
+			for (OreInfo oreInfo : oreInfoList) {
+				if (e.text().contains(oreInfo.getName().toLowerCase())) {
+					oreInfo.incrementCount();
+					return;
+				}
+			}
+
+			if (e.text().contains("You just found")) {
+				for (GemInfo gemInfo : gemInfos) {
+					if (e.text().contains(gemInfo.getName().replace("Uncut ", "").toLowerCase())) {
+						gemInfo.incrementCount();
+					}
+				}
+			}
+
+			if (e.text().contains("You'll need to activate")) {
+				useLodestone = false;
+			} else if (e.text().contains("Your coal bag is already")) {
+				coalBagCount = 27;
+			} else if (e.text().contains("There is no coal in")) {
+				coalBagCount = 0;
+				//} else if (msg.contains("Oh dear, you are d")) {
+				//if (!currentMiningSubScript.getClass().getName().equals("LivingRockCavern")) {
+				//MyMethods.println(msg);
+				//shutdown();	
+				//}
+			}
+
+		}
+	}
+
+	@Override
+	public void stop() {
+
+		System.out.println();
+		MyMethods.println("Ore Mined:");
+		for (OreInfo oreInfo : oreInfoList) {
+			MyMethods.println(oreInfo.getName() + ": " + oreInfo.getCount());
+		}
+		System.out.println();
+
+		MyMethods.println("Gems Mined:");
+		for (GemInfo gemInfo : gemInfos) {
+			MyMethods.println(gemInfo.getName() + ": " + gemInfo.getCount());
+		}
+		System.out.println();
+
+		MyMethods.println(displayname + " Stopped after " + MyMethods.formattedTimeSince(startTime));
+
+		if (skillTracker == null) {
+			MyMethods.println("stopping");
+			return;
+		}
+		MyMethods.println("Levels Gained: " + skillTracker.getLevelsGained());
+		MyMethods.println("Experience Gained: " + skillTracker.getExperienceGained());
+		MyMethods.println("Experience / Hour: " + MyMethods.formatDouble(skillTracker.getExperiencePerHour()));
 	}
 
 	@Override

@@ -180,19 +180,19 @@ public class Gui extends JFrame {
 
 				if (graniteCheck.isSelected()) {
 					script.rocks().add(Rock.GRANITE);
-					script.oreInfoList().add(new OreInfo(ctx, Ore.GRANITE_5KG));
-					script.oreInfoList().add(new OreInfo(ctx, Ore.GRANITE_2KG));
-					script.oreInfoList().add(new OreInfo(ctx, Ore.GRANITE_500G));
+					script.oreInfoList().add(new OreInfo(Ore.GRANITE_5KG));
+					script.oreInfoList().add(new OreInfo(Ore.GRANITE_2KG));
+					script.oreInfoList().add(new OreInfo(Ore.GRANITE_500G));
 				}
 
 				if (adamantiteCheck.isSelected()) {
 					script.rocks().add(Rock.ADAMANTITE);
-					script.oreInfoList().add(new OreInfo(ctx, Ore.ADAMANTITE));
+					script.oreInfoList().add(new OreInfo(Ore.ADAMANTITE));
 				}
 
 				if (mithrilCheck.isSelected()) {
 					script.rocks().add(Rock.MITHRIL);
-					script.oreInfoList().add(new OreInfo(ctx, Ore.MITHRIL));
+					script.oreInfoList().add(new OreInfo(Ore.MITHRIL));
 				}
 
 				if (goldCheck.isSelected()) {
@@ -201,7 +201,7 @@ public class Gui extends JFrame {
 					} else {	
 						script.rocks().add(Rock.GOLD);
 					}
-					script.oreInfoList().add(new OreInfo(ctx, Ore.GOLD));
+					script.oreInfoList().add(new OreInfo(Ore.GOLD));
 				}
 
 				if (coalCheck.isSelected()) {
@@ -210,45 +210,45 @@ public class Gui extends JFrame {
 					} else {	
 						script.rocks().add(Rock.COAL);
 					}
-					script.oreInfoList().add(new OreInfo (ctx, Ore.COAL));
+					script.oreInfoList().add(new OreInfo (Ore.COAL));
 				}
 
 				if (clayCheck.isSelected()) {
 					script.rocks().add(Rock.CLAY);
-					script.oreInfoList().add(new OreInfo(ctx, Ore.CLAY));
+					script.oreInfoList().add(new OreInfo(Ore.CLAY));
 				}
 
 				if (silverCheck.isSelected()) {
 					script.rocks().add(Rock.SILVER);
-					script.oreInfoList().add(new OreInfo(ctx, Ore.SILVER));
+					script.oreInfoList().add(new OreInfo(Ore.SILVER));
 				}
 
 				if (ironCheck.isSelected()) {
 					script.rocks().add(Rock.IRON);
-					script.oreInfoList().add(new OreInfo(ctx, Ore.IRON));
+					script.oreInfoList().add(new OreInfo(Ore.IRON));
 				}
 
 				if (tinCheck.isSelected()) {
 					script.rocks().add(Rock.TIN);
-					script.oreInfoList().add(new OreInfo(ctx, Ore.TIN));
+					script.oreInfoList().add(new OreInfo(Ore.TIN));
 				}
 
 				if (copperCheck.isSelected()) {
 					script.rocks().add(Rock.COPPER);
-					script.oreInfoList().add(new OreInfo(ctx, Ore.COPPER));
+					script.oreInfoList().add(new OreInfo(Ore.COPPER));
 				}
 
 				if (essenceCheck.isSelected()) {
-					script.oreInfoList().add(new OreInfo(ctx, Ore.PURE_ESSENCE));
-					script.oreInfoList().add(new OreInfo(ctx, Ore.RUNE_ESSENCE));
+					script.oreInfoList().add(new OreInfo(Ore.PURE_ESSENCE));
+					script.oreInfoList().add(new OreInfo(Ore.RUNE_ESSENCE));
 				}
 
 				if (!essenceCheck.isSelected()) {
-					script.gems = new GemInfo[4];
-					script.gems[0] = new GemInfo(ctx, Gem.UNCUT_SAPPHIRE);
-					script.gems[1] = new GemInfo(ctx, Gem.UNCUT_EMERALD); 
-					script.gems[2] = new GemInfo(ctx, Gem.UNCUT_RUBY);
-					script.gems[3] = new GemInfo(ctx, Gem.UNCUT_DIAMOND);
+					script.gemInfos = new GemInfo[4];
+					script.gemInfos[0] = new GemInfo(Gem.UNCUT_SAPPHIRE);
+					script.gemInfos[1] = new GemInfo(Gem.UNCUT_EMERALD); 
+					script.gemInfos[2] = new GemInfo(Gem.UNCUT_RUBY);
+					script.gemInfos[3] = new GemInfo(Gem.UNCUT_DIAMOND);
 				}
 
 				if (bankOreRadio.isSelected() && pickupOreCheck.isSelected()) {

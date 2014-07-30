@@ -73,7 +73,7 @@ public class ShowMoreGui extends JFrame {
 	}
 
 	private void updateData() {
-		data = new String[script.oreInfoList().size() + script.gems.length + 1][4];
+		data = new String[script.oreInfoList().size() + script.gemInfos.length + 1][4];
 
 		int dataIndex = 0;
 
@@ -88,11 +88,11 @@ public class ShowMoreGui extends JFrame {
 			data[dataIndex] = row;
 		}
 
-		for (int i = 0; i < script.gems.length; i++, dataIndex++) {
-			String[] row = {script.gems[i].getName(), 
-					Integer.toString(script.gems[i].getCount()),
-					Integer.toString(script.gems[i].getPrice()),
-					Integer.toString(script.gems[i].getCount() * script.gems[i].getPrice())};
+		for (int i = 0; i < script.gemInfos.length; i++, dataIndex++) {
+			String[] row = {script.gemInfos[i].getName(), 
+					Integer.toString(script.gemInfos[i].getCount()),
+					Integer.toString(script.gemInfos[i].getPrice()),
+					Integer.toString(script.gemInfos[i].getCount() * script.gemInfos[i].getPrice())};
 			data[dataIndex] = row;
 		}
 

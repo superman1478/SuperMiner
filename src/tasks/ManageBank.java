@@ -46,8 +46,6 @@ public class ManageBank extends Task {
 				return;
 			}
 
-			script().countInventoryOresAndGemsAsBanked();
-
 			if (ctx.backpack.select().id(SuperMiner.ITEM_IDS_TO_KEEP).count() > 0) {
 				BankMethods.depositAllExcept(ctx, SuperMiner.ITEM_IDS_TO_KEEP);
 				MyMethods.sleep(500, 800);
@@ -68,8 +66,6 @@ public class ManageBank extends Task {
 				MyMethods.sleep(100, 300);
 				return;
 			}
-
-			script().countInventoryOresAndGemsAsBanked();
 
 			if (ctx.backpack.select().id(SuperMiner.ITEM_IDS_TO_KEEP).count() > 0) {
 				DepositBoxMethods.depositAllExcept(ctx, SuperMiner.ITEM_IDS_TO_KEEP);

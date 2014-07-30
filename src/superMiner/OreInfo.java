@@ -1,18 +1,20 @@
 package superMiner;
 
-import org.powerbot.script.rt6.ClientContext;
-
 public class OreInfo {
 	private Ore ore;
-	private int inventoryCount = 0;
-	private int bankCount = 0;
+	private int count = 0;
 	private int price;
-	
-	private ClientContext ctx;
 
-	public OreInfo(ClientContext ctx, Ore ore) {
-		this.ctx = ctx;
+	public OreInfo(Ore ore) {
 		this.ore = ore;
+	}
+
+	public int getCount() {
+		return count;
+	}
+	
+	public void incrementCount() {
+		count++;
 	}
 
 	public void setPrice(int price) {
@@ -23,32 +25,12 @@ public class OreInfo {
 		return price;
 	}
 
-	public int getBankCount() {
-		return bankCount;
-	}
-
-	public void updateInventoryCount() {
-		inventoryCount = ctx.backpack.select().id(ore.getId()).count();
-	}
-
-	public int getCount() {
-		return inventoryCount + bankCount;
-	}
-
-	public void increaseBankCountBy(int amount) {
-		bankCount += amount;
-	}
-
 	public String getName() {
 		return ore.getName();
 	}
 
 	public int getId() {
 		return ore.getId();
-	}
-	
-	public Ore getOre() {
-		return ore;
 	}
 
 }

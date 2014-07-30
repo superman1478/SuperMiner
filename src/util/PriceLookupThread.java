@@ -27,7 +27,7 @@ public class PriceLookupThread extends Thread {
 				}
 			}
 
-			for (GemInfo gem : script.gems) {
+			for (GemInfo gem : script.gemInfos) {
 				gem.setPrice(PriceLookup.getPriceUsingRSBotGeItem(gem.getId()));
 				if (gem.getPrice() == 0) {
 					MyMethods.println("price lookup failed for " +  gem.getName());
