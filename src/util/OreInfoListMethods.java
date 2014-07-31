@@ -7,7 +7,7 @@ import superMiner.Ore;
 import superMiner.OreInfo;
 
 public class OreInfoListMethods {
-	
+
 	public static int[] oreInfoListToIdIntArray(List<OreInfo> oreInfoList) {
 		int[] OreIds = new int[oreInfoList.size()];
 		for (int i = 0; i < OreIds.length; i++) {
@@ -15,7 +15,7 @@ public class OreInfoListMethods {
 		}
 		return OreIds;
 	}
-	
+
 	/**
 	 *
 	 * Does not verify that oreInfoList contains anything.
@@ -33,15 +33,6 @@ public class OreInfoListMethods {
 		return true;
 	}
 
-	/*public static boolean ListContains(List<OreInfo> oreInfoList, int oreId) {
-		for (OreInfo oreInfo : oreInfoList) {
-			if (oreInfo.getId() == oreId) {
-				return true;
-			}
-		}
-		return false;
-	}*/
-
 	public static boolean ListContains(List<OreInfo> oreInfoList, Ore ore) {
 		for (OreInfo oreInfo : oreInfoList) {
 			if (oreInfo.getId() == ore.getId()) {
@@ -50,4 +41,5 @@ public class OreInfoListMethods {
 		}
 		return false;
 	}
+	
 }
