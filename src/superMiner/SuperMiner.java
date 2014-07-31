@@ -84,8 +84,6 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 
 	private boolean pickupOreOnGround;
 
-	//private int pickaxeId;
-
 	private String message;
 
 	private boolean debug = false;
@@ -143,7 +141,7 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 	 * This method is used to select the MineInfo that will work best for the local player's
 	 * location, skills and selected ores.
 	 * <p>
-	 * Once the MineInfo has been determined, its tasks will be added to tasks.
+	 * Once the MineInfo has been determined, its tasks will be added to the ArrayList tasks.
 	 *
 	 */
 	public void taskSetup() {
@@ -249,11 +247,9 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 
 		DebugMethods.println(debug, "poll()");
 
-		try {
+		try { //This try catch is meant to catch any exception that the api or bot throws.
 
-			//if (ctx.hud.isOpen(Hud.Window.BACKPACK)) {
 			moneyGained = getMoneyGained();
-			//}
 
 			for (Task task : tasks) {
 				if (task.activate()) {
@@ -338,7 +334,7 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 
 			if (skillTracker.getExperienceGained() == 0) {
 				g.drawString("Time TNL: ", x, y);
-			} else {	
+			} else {
 				g.drawString("Time TNL: " + MyMethods.formatTime(skillTracker.getMillisecondsToNextLevel()), x, y);
 			}
 			y += 7;
@@ -512,7 +508,6 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 		}
 
 	}
-
 
 	@Override
 	public void mouseEntered(MouseEvent e) {}
