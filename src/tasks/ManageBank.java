@@ -33,12 +33,19 @@ public class ManageBank extends Task {
 	@Override
 	public void execute() {
 
-		if (ctx.bank.opened()) {
-			if (ctx.backpack.select().id(SuperMiner.COALBAG_ID).count() > 0
-					&& script().coalBagCount > 0
-					&& ctx.backpack.select().count() != 28) {
-				coalBagWithdraw();
+		if (!ctx.bank.opened() && !ctx.depositBox.opened()) {
+			if (!openBankOrDepositBox()) {
+				return;
 			}
+		}
+
+		if (ctx.backpack.select().id(SuperMiner.COALBAG_ID).count() > 0
+				&& script().coalBagCount > 0
+				&& ctx.backpack.select().count() != 28) {
+			coalBagWithdraw();
+		}
+
+		if (ctx.bank.opened()) {
 
 			if (ctx.backpack.select().count() < 28) {
 				ctx.bank.close();
@@ -54,12 +61,7 @@ public class ManageBank extends Task {
 				MyMethods.sleep(500, 800);
 			}
 
-		} else if (ctx.depositBox.open()) {
-			if (ctx.backpack.select().id(SuperMiner.COALBAG_ID).count() > 0
-					&& script().coalBagCount > 0
-					&& ctx.backpack.select().count() != 28) {
-				coalBagWithdraw();
-			}
+		} else if (ctx.depositBox.opened()) {
 
 			if (ctx.backpack.select().count() < 28) {
 				ctx.depositBox.close();
@@ -75,29 +77,32 @@ public class ManageBank extends Task {
 				ctx.depositBox.depositInventory();
 				MyMethods.sleep(500, 800);
 			}
-		} else {
-
-			if (ctx.players.local().animation() == -1) {
-				DebugMethods.println(script().debug(), "attempting to open bank");
-				if (ctx.bank.nearest().tile().matrix(ctx).onMap()) {
-					if (ctx.bank.open()) {
-						MyMethods.sleep(300, 600);
-					} else {
-						MyMethods.println("failed to open bank");
-					}
-				} else if (ctx.depositBox.nearest().tile().matrix(ctx).onMap()) {
-					if (ctx.depositBox.open()) {
-						MyMethods.sleep(300, 600);
-					} else {
-						MyMethods.println("failed to depositBox");
-					}
-				}
-			}
 
 		}
 
 	}
-	
+
+	private boolean openBankOrDepositBox() {
+		if (ctx.players.local().idle()) {
+			if (ctx.bank.nearest().tile().matrix(ctx).onMap()) {
+				if (ctx.bank.open()) {
+					MyMethods.sleep(300, 600);
+					return true;
+				} else {
+					MyMethods.println("failed to open bank");
+				}
+			} else if (ctx.depositBox.nearest().tile().matrix(ctx).onMap()) {
+				if (ctx.depositBox.open()) {
+					MyMethods.sleep(300, 600);
+					return true;
+				} else {
+					MyMethods.println("failed to depositBox");
+				}
+			}
+		}
+		return false;
+	}
+
 	private void coalBagWithdraw() {
 		DebugMethods.println(script().debug(), "manageColaBagWithdraw()");
 		Item coalbag = ctx.backpack.select().id(SuperMiner.COALBAG_ID).poll();
