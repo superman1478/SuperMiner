@@ -1,5 +1,9 @@
 package superMiner;
 
+/**
+ * This class is used to keep track of information about a gem.
+ *
+ */
 public class GemInfo {
 
 	private Gem gem;

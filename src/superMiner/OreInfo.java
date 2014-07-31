@@ -1,5 +1,9 @@
 package superMiner;
 
+/**
+ * This class is used to keep track of information about an ore.
+ *
+ */
 public class OreInfo {
 	private Ore ore;
 	private int count = 0;
