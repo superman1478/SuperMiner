@@ -437,11 +437,13 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 
 		if(e.source().isEmpty()) {
 
-			for (OreInfo oreInfo : oreInfoList) {
-				if (e.text().contains(oreInfo.getName().toLowerCase())) {
-					oreInfo.incrementCount();
-					return;
+			if (e.text().contains("You manage to mine")) {
+				for (OreInfo oreInfo : oreInfoList) {
+					if (e.text().contains(oreInfo.getName().toLowerCase())) {
+						oreInfo.incrementCount();
+					}
 				}
+				return;
 			}
 
 			if (e.text().contains("You just found")) {
@@ -450,6 +452,7 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 						gemInfo.incrementCount();
 					}
 				}
+				return;
 			}
 
 			if (e.text().contains("You'll need to activate")) {
