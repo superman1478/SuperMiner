@@ -41,17 +41,19 @@ import util.PriceLookupThread;
 @SuppressWarnings("serial")
 public class Gui extends JFrame {
 
-	private JCheckBox copperCheck = new JCheckBox("Copper");
-	private JCheckBox tinCheck = new JCheckBox("Tin");
-	private JCheckBox clayCheck = new JCheckBox("Clay");
-	private JCheckBox ironCheck = new JCheckBox("Iron");
-	private JCheckBox silverCheck = new JCheckBox("Silver");
-	private JCheckBox coalCheck = new JCheckBox("Coal");
-	private JCheckBox goldCheck = new JCheckBox("Gold");
-	private JCheckBox mithrilCheck = new JCheckBox("Mithril");
-	private JCheckBox adamantiteCheck = new JCheckBox("Adamantite");
-	private JCheckBox graniteCheck = new JCheckBox("Granite");
-	private JCheckBox essenceCheck = new JCheckBox("Essence");
+	private OreChoice copper = new OreChoice(Rock.COPPER, new OreInfo(Ore.COPPER));
+	private OreChoice tin = new OreChoice(Rock.TIN, new OreInfo(Ore.TIN));
+	private OreChoice clay = new OreChoice(Rock.CLAY, new OreInfo(Ore.CLAY));
+	private OreChoice iron = new OreChoice(Rock.IRON, new OreInfo(Ore.IRON));
+	private OreChoice silver = new OreChoice(Rock.SILVER, (new OreInfo(Ore.SILVER)));
+	private OreChoice coal = new OreChoice(Rock.COAL, new OreInfo(Ore.COAL));
+	private OreChoice gold = new OreChoice(Rock.GOLD, new OreInfo(Ore.GOLD));
+	private OreChoice mithril = new OreChoice(Rock.MITHRIL, new OreInfo(Ore.MITHRIL));
+	private OreChoice adamantite = new OreChoice(Rock.ADAMANTITE, new OreInfo(Ore.ADAMANTITE));
+	private OreChoice granite = new OreChoice(Rock.GRANITE, new OreInfo(Ore.GRANITE_5KG),
+			new OreInfo(Ore.GRANITE_2KG), new OreInfo(Ore.GRANITE_500G));
+	private OreChoice essence = new OreChoice("Essence", new OreInfo(Ore.PURE_ESSENCE),
+			new OreInfo(Ore.RUNE_ESSENCE));//TODO consider adding essence rock
 
 	private JPanel checkboxPanel = new JPanel();
 
@@ -72,12 +74,15 @@ public class Gui extends JFrame {
 	private File settingsFile;
 
 	private SuperMiner script;
-	private ClientContext ctx;
 
 	public Gui(final ClientContext ctx) {
-		this.ctx = ctx;
 		script = (SuperMiner)ctx.controller.script();
 		settingsFile = getSettingsFile();
+
+		if (Area.LIVING_ROCK_CAVERN.area().contains(ctx.players.local())) {
+			gold = new OreChoice(Rock.GOLD_MINERAL_DEPOSIT, new OreInfo(Ore.GOLD));
+			coal = new OreChoice(Rock.COAL_MINERAL_DEPOSIT, new OreInfo(Ore.COAL));
+		}
 
 		setTitle("GUI");
 		setLayout(new GridBagLayout());
@@ -96,14 +101,14 @@ public class Gui extends JFrame {
 		pack();
 		setLocationRelativeTo(getOwner());
 	}
-	
+
 	private void initComponents() {
 
 		checkboxPanel.setBorder(BorderFactory.createTitledBorder("Select Ore(s)"));
 		checkboxPanel.setLayout(new GridBagLayout());
 
-		JCheckBox[] oreCheckboxes = {copperCheck, tinCheck, clayCheck, ironCheck, silverCheck,
-				essenceCheck, coalCheck, goldCheck, mithrilCheck, adamantiteCheck, graniteCheck};
+		final JCheckBox[] oreCheckboxes = {copper, tin, clay, iron, silver, essence, coal, gold,
+				mithril, adamantite, granite};
 
 		GridBagConstraints oreCheckboxConstraints = new GridBagConstraints();
 		oreCheckboxConstraints.gridx = 0;
@@ -178,72 +183,21 @@ public class Gui extends JFrame {
 					writeSettings();
 				}
 
-				if (graniteCheck.isSelected()) {
-					script.rocks().add(Rock.GRANITE);
-					script.oreInfoList().add(new OreInfo(Ore.GRANITE_5KG));
-					script.oreInfoList().add(new OreInfo(Ore.GRANITE_2KG));
-					script.oreInfoList().add(new OreInfo(Ore.GRANITE_500G));
-				}
+				final OreChoice[] oreChoices = {essence, granite, adamantite, mithril, gold, coal,
+						clay, silver, iron, tin, copper};
 
-				if (adamantiteCheck.isSelected()) {
-					script.rocks().add(Rock.ADAMANTITE);
-					script.oreInfoList().add(new OreInfo(Ore.ADAMANTITE));
-				}
-
-				if (mithrilCheck.isSelected()) {
-					script.rocks().add(Rock.MITHRIL);
-					script.oreInfoList().add(new OreInfo(Ore.MITHRIL));
-				}
-
-				if (goldCheck.isSelected()) {
-					if (Area.LIVING_ROCK_CAVERN.area().contains(ctx.players.local())) {
-						script.rocks().add(Rock.GOLD_MINERAL_DEPOSIT);
-					} else {	
-						script.rocks().add(Rock.GOLD);
+				for (OreChoice oreChoice : oreChoices) {
+					if (oreChoice.isSelected()) {
+						if (oreChoice.getRock() != null) {
+							script.rocks().add(oreChoice.getRock());
+						}
+						for (OreInfo oreInfo : oreChoice.getOreInfos()) {
+							script.oreInfoList().add(oreInfo);
+						}
 					}
-					script.oreInfoList().add(new OreInfo(Ore.GOLD));
 				}
 
-				if (coalCheck.isSelected()) {
-					if (Area.LIVING_ROCK_CAVERN.area().contains(ctx.players.local())) {
-						script.rocks().add(Rock.COAL_MINERAL_DEPOSIT);
-					} else {	
-						script.rocks().add(Rock.COAL);
-					}
-					script.oreInfoList().add(new OreInfo (Ore.COAL));
-				}
-
-				if (clayCheck.isSelected()) {
-					script.rocks().add(Rock.CLAY);
-					script.oreInfoList().add(new OreInfo(Ore.CLAY));
-				}
-
-				if (silverCheck.isSelected()) {
-					script.rocks().add(Rock.SILVER);
-					script.oreInfoList().add(new OreInfo(Ore.SILVER));
-				}
-
-				if (ironCheck.isSelected()) {
-					script.rocks().add(Rock.IRON);
-					script.oreInfoList().add(new OreInfo(Ore.IRON));
-				}
-
-				if (tinCheck.isSelected()) {
-					script.rocks().add(Rock.TIN);
-					script.oreInfoList().add(new OreInfo(Ore.TIN));
-				}
-
-				if (copperCheck.isSelected()) {
-					script.rocks().add(Rock.COPPER);
-					script.oreInfoList().add(new OreInfo(Ore.COPPER));
-				}
-
-				if (essenceCheck.isSelected()) {
-					script.oreInfoList().add(new OreInfo(Ore.PURE_ESSENCE));
-					script.oreInfoList().add(new OreInfo(Ore.RUNE_ESSENCE));
-				}
-
-				if (!essenceCheck.isSelected()) {
+				if (!essence.isSelected()) {
 					script.gemInfos = new GemInfo[4];
 					script.gemInfos[0] = new GemInfo(Gem.UNCUT_SAPPHIRE);
 					script.gemInfos[1] = new GemInfo(Gem.UNCUT_EMERALD); 
@@ -282,87 +236,10 @@ public class Gui extends JFrame {
 	}
 
 	private void updateSettings() {
-
 		if (settingsFile.exists()) {
 			readSettings();
 			saveCheck.setSelected(true);
 		}
-
-		if (Area.LIVING_ROCK_CAVERN.area().contains(ctx.players.local())) {
-
-			MyMethods.println("In Living Rock Cavern Area" );
-			MyMethods.println("disabling some ore options" );
-
-			copperCheck.setSelected(false);
-			copperCheck.setEnabled(false);
-
-			tinCheck.setSelected(false);
-			tinCheck.setEnabled(false);
-
-			clayCheck.setSelected(false);
-			clayCheck.setEnabled(false);
-
-			ironCheck.setSelected(false);
-			ironCheck.setEnabled(false);
-
-			silverCheck.setSelected(false);
-			silverCheck.setEnabled(false);
-
-			//coalCheck.setSelected(false);
-
-			//goldCheck.setSelected(true);
-
-			mithrilCheck.setSelected(false);
-			mithrilCheck.setEnabled(false);
-
-			adamantiteCheck.setSelected(false);
-			adamantiteCheck.setEnabled(false);
-
-			graniteCheck.setSelected(false);
-			graniteCheck.setEnabled(false);
-
-			essenceCheck.setSelected(false);
-			essenceCheck.setEnabled(false);
-
-		} else if (Area.KELDAGRIM.area().contains(ctx.players.local()) 
-				|| Area.DONDAKAN_MINE.area().contains(ctx.players.local())
-				|| Area.DONDAKAN_MINE_2.area().contains(ctx.players.local())) {
-
-			MyMethods.println("In dondakan mine area Area" );
-			MyMethods.println("disabling some ore options" );
-
-			copperCheck.setSelected(false);
-			copperCheck.setEnabled(false);
-
-			tinCheck.setSelected(false);
-			tinCheck.setEnabled(false);
-
-			clayCheck.setSelected(false);
-			clayCheck.setEnabled(false);
-
-			ironCheck.setSelected(false);
-			ironCheck.setEnabled(false);
-
-			silverCheck.setSelected(false);
-			silverCheck.setEnabled(false);
-
-			coalCheck.setSelected(false);
-			coalCheck.setEnabled(false);
-
-			goldCheck.setSelected(true);
-			goldCheck.setEnabled(false);
-
-			mithrilCheck.setSelected(false);
-			mithrilCheck.setEnabled(false);
-
-			adamantiteCheck.setSelected(false);
-			adamantiteCheck.setEnabled(false);
-
-			graniteCheck.setSelected(false);
-			graniteCheck.setEnabled(false);
-
-		}
-
 	}
 
 	private void readSettings() {
@@ -370,21 +247,21 @@ public class Gui extends JFrame {
 		try {
 			BufferedReader input = new BufferedReader(new FileReader(settingsFile));
 			try {
-				copperCheck.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
-				tinCheck.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
-				clayCheck.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
-				ironCheck.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
-				silverCheck.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
-				coalCheck.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
-				goldCheck.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
-				mithrilCheck.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
-				adamantiteCheck.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
-				graniteCheck.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
+				copper.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
+				tin.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
+				clay.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
+				iron.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
+				silver.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
+				coal.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
+				gold.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
+				mithril.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
+				adamantite.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
+				granite.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
 				pickupOreCheck.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
 				bankOreRadio.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
 				dropWhenFullRadio.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
 				asapDropRadio.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
-				essenceCheck.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
+				essence.setSelected(Boolean.parseBoolean(input.readLine().split(": ")[1]));
 			} finally {
 				if (input != null) input.close();
 			}
@@ -397,21 +274,21 @@ public class Gui extends JFrame {
 		try {
 			BufferedWriter output = new BufferedWriter(new FileWriter(settingsFile));
 			try {
-				output.write("copperCheck: " + copperCheck.isSelected() + System.lineSeparator()
-						+ "tinCheck: " + tinCheck.isSelected() + System.lineSeparator()
-						+ "clayCheck: " + clayCheck.isSelected() + System.lineSeparator()
-						+ "ironCheck: " + ironCheck.isSelected() + System.lineSeparator()
-						+ "silverCheck: " + silverCheck.isSelected() + System.lineSeparator()
-						+ "coalCheck: " + coalCheck.isSelected() + System.lineSeparator()
-						+ "goldCheck: " + goldCheck.isSelected() + System.lineSeparator()
-						+ "mithrilCheck: " + mithrilCheck.isSelected() + System.lineSeparator()
-						+ "adamantiteCheck: " + adamantiteCheck.isSelected() + System.lineSeparator()
-						+ "graniteCheck: " + graniteCheck.isSelected() + System.lineSeparator()
+				output.write("copper: " + copper.isSelected() + System.lineSeparator()
+						+ "tin: " + tin.isSelected() + System.lineSeparator()
+						+ "clay: " + clay.isSelected() + System.lineSeparator()
+						+ "iron: " + iron.isSelected() + System.lineSeparator()
+						+ "silver: " + silver.isSelected() + System.lineSeparator()
+						+ "coal: " + coal.isSelected() + System.lineSeparator()
+						+ "gold: " + gold.isSelected() + System.lineSeparator()
+						+ "mithril: " + mithril.isSelected() + System.lineSeparator()
+						+ "adamantite: " + adamantite.isSelected() + System.lineSeparator()
+						+ "granite: " + granite.isSelected() + System.lineSeparator()
 						+ "pickupOreCheck: " + pickupOreCheck.isSelected() + System.lineSeparator()
 						+ "bankOreRadio: " + bankOreRadio.isSelected() + System.lineSeparator()
 						+ "dropWhenFull: " + dropWhenFullRadio.isSelected() + System.lineSeparator()
 						+ "asapDrop1: " + asapDropRadio.isSelected() + System.lineSeparator()
-						+ "essenceCheck: " + essenceCheck.isSelected() + System.lineSeparator()
+						+ "essenceCheck: " + essence.isSelected() + System.lineSeparator()
 						);
 			} finally {
 				if (output != null) output.close();
