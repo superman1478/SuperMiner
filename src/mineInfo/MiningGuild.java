@@ -61,7 +61,7 @@ public class MiningGuild extends MineInfo {
 			tasks.add(new ClimbUpLadder(ctx, toFaladorEastTiles));
 			tasks.add(new WalkToBank(ctx, toFaladorEastTiles));
 			tasks.add(new ClimbDownLadder(ctx, toFaladorEastTiles));
-			tasks.add(new WalkToMine(ctx, this));
+			tasks.add(new WalkToMine(ctx, tilesToBank()));
 		} else {
 			if (script().dropASAP()) {
 				script().miningMethod("Drop ASAP");

@@ -3,30 +3,35 @@ package tasks;
 import methods.DebugMethods;
 import methods.MyMethods;
 
+import org.powerbot.script.Tile;
 import org.powerbot.script.rt6.ClientContext;
 import org.powerbot.script.rt6.TilePath;
 
-import superMiner.MineInfo;
 import superMiner.Task;
 
 public class WalkToMine extends Task {
+	
+	private TilePath tilePath;
 
-	private MineInfo areaInfo;
+	private Tile firstTile;
 
-	private TilePath tilePath = null;
-
-	public WalkToMine(ClientContext ctx, MineInfo areaInfo) {
+	/**
+	 * A reversed copy of tilesToBank will be used to walk to the mine.
+	 * @param ctx
+	 * @param tilesToBank
+	 */
+	public WalkToMine(ClientContext ctx, Tile[] tilesToBank) {
 		super(ctx);
-		this.areaInfo = areaInfo;
-		tilePath = new TilePath(ctx, areaInfo.tilesToBank());
+		tilePath = new TilePath(ctx, tilesToBank);
 		tilePath.reverse();
+		firstTile = tilesToBank[0];
 	}
 
 	@Override
 	public boolean activate() {
 		return ctx.backpack.select().count() < 28
-				&& (!areaInfo.tilesToBank()[0].matrix(ctx).onMap()
-						|| areaInfo.tilesToBank()[0].distanceTo(ctx.players.local()) > 15)
+				&& (!firstTile.matrix(ctx).onMap()
+						|| firstTile.distanceTo(ctx.players.local()) > 15)
 				;
 	}
 

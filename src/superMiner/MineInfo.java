@@ -50,7 +50,7 @@ public abstract class MineInfo {
 
 			tasks.add(new ManageBank(ctx, tilesToBank()[tilesToBank().length - 1]));
 			tasks.add(new WalkToBank(ctx, tilesToBank()));
-			tasks.add(new WalkToMine(ctx, this));
+			tasks.add(new WalkToMine(ctx, tilesToBank()));
 		} else {
 			if (script().dropASAP()) {
 				script().miningMethod("Drop ASAP");

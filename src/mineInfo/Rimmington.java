@@ -1,4 +1,4 @@
-	package mineInfo;
+package mineInfo;
 
 import java.util.ArrayList;
 
@@ -28,10 +28,25 @@ import tasks.WalkToMine;
 
 public class Rimmington extends MineInfo {
 
-	private final Tile[] tilesToBank = new Tile[] {new Tile(2970, 3237, 0), new Tile(2972, 3247, 0),
+	private final Tile[] lodestoneTilesToDepositBox = new Tile[] {
+			new Tile(2975, 3237, 0), new Tile(2971, 3235, 0),
+			new Tile(2969, 3230, 0), new Tile(2971, 3225, 0),
+			new Tile(2976, 3224, 0), new Tile(2981, 3222, 0),
+			new Tile(2986, 3220, 0), new Tile(2991, 3219, 0),
+			new Tile(2996, 3218, 0), new Tile(3001, 3217, 0),
+			new Tile(3006, 3217, 0), new Tile(3010, 3214, 0),
+			new Tile(3015, 3213, 0), new Tile(3016, 3216, 0),
+			new Tile(3021, 3217, 0), new Tile(3025, 3220, 0),
+			new Tile(3028, 3224, 0), new Tile(3028, 3229, 0),
+			new Tile(3029, 3234, 0), new Tile(3034, 3236, 0),
+			new Tile(3039, 3236, 0), new Tile(3044, 3237, 0)
+	};
+
+	private final Tile[] directTilesToDepositBox = new Tile[] {new Tile(2970, 3237, 0), new Tile(2972, 3247, 0),
 			new Tile(2982, 3251, 0), new Tile(2992, 3249, 0), new Tile(3002, 3246, 0), new Tile(3012, 3243, 0),
 			new Tile(3022, 3241, 0), new Tile(3068, 3230, 0), new Tile(3028, 3238, 0), new Tile(3038, 3236, 0),
-			new Tile(3048, 3236, 0), new Tile(3047, 3236, 0)};
+			new Tile(3048, 3236, 0), new Tile(3047, 3236, 0),
+	};
 
 	private final Filter<GameObject> rockFilter = new Filter<GameObject>() {
 		@Override
@@ -53,7 +68,7 @@ public class Rimmington extends MineInfo {
 		tasks.add(new RimmingtonScbscribeWindowCloser(ctx));
 
 		if (ctx.backpack.select().id(SuperMiner.COALBAG_ID).count() > 0) {
-			tasks.add(new FillCoalBag(ctx, tilesToBank));
+			tasks.add(new FillCoalBag(ctx, lodestoneTilesToDepositBox));
 		}
 
 		if (script().pickupOreOnGround()) {
@@ -66,10 +81,10 @@ public class Rimmington extends MineInfo {
 			script().miningMethod("Banking");
 			MyMethods.println("Banking is enabled.");
 
-			tasks.add(new ManageBank(ctx, tilesToBank[tilesToBank.length - 1]));
-			tasks.add(new PortSarimRecall(ctx, tilesToBank));
-			tasks.add(new RimmingtonWalkToBank(ctx, tilesToBank));
-			tasks.add(new WalkToMine(ctx, this));
+			tasks.add(new ManageBank(ctx, lodestoneTilesToDepositBox[lodestoneTilesToDepositBox.length - 1]));
+			tasks.add(new PortSarimRecall(ctx, lodestoneTilesToDepositBox));
+			tasks.add(new RimmingtonWalkToBank(ctx, lodestoneTilesToDepositBox));
+			tasks.add(new WalkToMine(ctx, directTilesToDepositBox));
 		} else {
 			if (script().dropASAP()) {
 				script().miningMethod("Drop ASAP");
@@ -83,7 +98,7 @@ public class Rimmington extends MineInfo {
 
 	@Override
 	public Tile[] tilesToBank() {
-		return tilesToBank;
+		return lodestoneTilesToDepositBox;
 	}
 
 	@Override
