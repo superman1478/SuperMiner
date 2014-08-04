@@ -55,7 +55,7 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 
 	private final double version = 2.1;
 
-	private long startTime = 0;
+	private long startTime = 0; //Set when the user press the Gui start button.
 
 	public static final int SHARK_ID = 385, SPIN_TICKET_ID = 24154, COALBAG_ID = 18339;
 
