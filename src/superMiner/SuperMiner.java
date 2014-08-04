@@ -100,7 +100,7 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 
 	private int moneyGained = 0;
 
-	private static final Color PaintBackgroundColor = new Color(0, 0, 0, 180);
+	private static final Color PAINT_BACKGROUND_COLOR = new Color(0, 0, 0, 180);
 
 	private SkillTracker skillTracker = null;
 
@@ -281,7 +281,7 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 
 		if (message != null) {
 
-			g.setColor(PaintBackgroundColor);
+			g.setColor(PAINT_BACKGROUND_COLOR);
 			g.fillRect(x, y, 200, 21);
 			x += 5;
 
@@ -296,7 +296,7 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 		}
 
 		//draw background
-		g.setColor(PaintBackgroundColor);
+		g.setColor(PAINT_BACKGROUND_COLOR);
 		g.fillRect(x, y, 129, 168);
 		x += 5;
 		y += 15;
@@ -349,7 +349,7 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 		if (bankingEnabled) {
 
 			for (OreInfo oreInfo : oreInfoList) {
-				g.setColor(PaintBackgroundColor);
+				g.setColor(PAINT_BACKGROUND_COLOR);
 				g.fillRect(x - 5, y - 7, 129, 15);
 				g.setColor(Color.RED);
 				g.drawString(oreInfo.getName() + " Mined: " + oreInfo.getCount(), x, y);
@@ -357,27 +357,27 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 			}
 
 			for (GemInfo gem : gemInfos) {
-				g.setColor(PaintBackgroundColor);
+				g.setColor(PAINT_BACKGROUND_COLOR);
 				g.fillRect(x - 5, y - 7, 129, 15);
 				g.setColor(Color.RED);
 				g.drawString(gem.getName() + "s Mined: " + gem.getCount(), x, y);
 				y += 15;
 			}
 
-			g.setColor(PaintBackgroundColor);
+			g.setColor(PAINT_BACKGROUND_COLOR);
 			g.fillRect(x - 5, y - 7, 129, 15);
 			g.setColor(Color.RED);
 			g.drawString("Money Gained: " + MyMethods.formatDouble(moneyGained), x, y);
 			y += 15;
 
-			g.setColor(PaintBackgroundColor);
+			g.setColor(PAINT_BACKGROUND_COLOR);
 			g.fillRect(x - 5, y - 7, 129, 15);
 			g.setColor(Color.RED);
 			g.drawString("Money / Hour: " + MyMethods.formatDouble((double)moneyGained 
 					/ MyCalculations.getHoursSince(startTime)), x, y);
 			y += 15;
 
-			g.setColor(PaintBackgroundColor);
+			g.setColor(PAINT_BACKGROUND_COLOR);
 			g.fillRect(x - 5, y - 7, 129, 15);
 			g.setColor(Color.LIGHT_GRAY);
 			g.drawString("Click Here for more info", x, y);
