@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 import methods.DebugMethods;
 import methods.MyCalculations;
@@ -132,8 +133,13 @@ public class SuperMiner extends PollingScript<ClientContext> implements PaintLis
 
 		skillTracker = new SkillTracker(ctx, Skills.MINING);
 
-		Gui mygui = new Gui(ctx);
-		mygui.setVisible(true);
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				Gui mygui = new Gui(ctx);
+				mygui.setVisible(true);
+			}
+		});
 
 	}
 
