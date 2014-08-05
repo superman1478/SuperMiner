@@ -1,5 +1,6 @@
 package tasks;
 
+import methods.DebugMethods;
 import methods.MyMethods;
 
 import org.powerbot.script.Tile;
@@ -32,6 +33,7 @@ public class WalkToBank extends Task {
 
 	@Override
 	public void execute() {
+		DebugMethods.println(script().debug(), "walking to " + tilePath.next());
 		if (tilePath.traverse()) {
 			MyMethods.sleep(400, 700);
 		}
